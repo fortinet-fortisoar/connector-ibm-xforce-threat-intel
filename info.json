@@ -1,14 +1,14 @@
 {
   "name": "ibm-xforce-threat-intel-feed",
-  "label": "IBM XForce TAXII 2.0 Client",
-  "description": "IBM XForce TAXII 2.0 Client",
+  "label": "IBM X-Force Threat Intel Feed",
+  "description": "IBM X-Force Threat Intelligence Feed Integration",
   "publisher": "Fortinet",
   "cs_approved": true,
   "cs_compatible": true,
   "version": "1.0.0",
-  "category": "SIEM",
-  "icon_small_name": "small_icon.png",
-  "icon_large_name": "large_icon.png",
+  "category": "Threat Intelligence",
+  "icon_small_name": "small.png",
+  "icon_large_name": "large.png",
   "help_online": "",
   "configuration": {
     "fields": [
@@ -52,7 +52,7 @@
     {
       "operation": "get_api_root_information",
       "title": "Get API Root Information",
-      "description": "Returns information contains title, description, TAXII versions and maximum size of the content body.",
+      "description": "Returns information contains title, description, TAXII versions and maximum size of the content body for the specified TAXII server.",
       "category": "investigation",
       "annotation": "get_api_root_information",
       "output_schema": {
@@ -69,7 +69,7 @@
     {
       "operation": "get_collections",
       "title": "Get Collections",
-      "description": "Returns a list of public/private/shared collection resources which users have the access.",
+      "description": "Returns a list of public/private/shared collection resources which users has the access.",
       "category": "investigation",
       "annotation": "get_collections",
       "output_schema": {
@@ -144,21 +144,22 @@
           "required": false,
           "editable": true,
           "type": "checkbox",
+          "value": true,
           "onchange": {
             "true": [
               {
-                "title": "Filename",
+                "title": "Save Response to File",
                 "name": "filename",
                 "type": "text",
                 "visible": true,
                 "editable": true,
                 "required": false,
                 "placeholder": "Eg. demo.json",
-                "tooltip": "file will create under /tmp directory"
+                "tooltip": "The file will be created under /tmp"
               }
             ]
           },
-          "tooltip": "If check then save the response in File else in JSON",
+          "tooltip": "If enabled, the feed will be written to a value, else returned as a JSON",
           "description": "Specify the response field, If check then save the response in File else in JSON"
         }
       ],
@@ -167,12 +168,61 @@
     {
       "operation": "get_output_schema",
       "annotation": "get_output_schema",
-      "description": "Gives the output schema based on the inputs",
+      "description": "Generates output schema for other actions based on the input configuration",
       "title": "Get Output Schema",
       "enabled": true,
       "visible": false,
       "parameters": [],
       "output_schema": {}
+    },
+    {
+      "operation": "get_objects_by_object_id",
+      "title": "Get Object By Object ID",
+      "description": "Returns general information for the specific object of a collection.",
+      "category": "investigation",
+      "annotation": "get_objects_by_object_id",
+      "output_schema": {
+        "spec_version": "",
+        "type": "",
+        "objects": [
+          {
+            "id": "",
+            "type": "",
+            "created": "",
+            "modified": "",
+            "labels": [
+            ],
+            "name": "",
+            "description": "",
+            "pattern": "",
+            "valid_from": ""
+          }
+        ],
+        "id": ""
+      },
+      "parameters": [
+        {
+          "title": "collection ID",
+          "name": "collectionID",
+          "visible": true,
+          "required": true,
+          "editable": true,
+          "type": "text",
+          "tooltip": "Specify the Collection ID, who's Object information you want to retrieve.",
+          "description": "Specify the Collection ID, who's Object information you want to retrieve"
+        },
+        {
+          "title": "Object ID",
+          "name": "objectID",
+          "visible": true,
+          "required": true,
+          "editable": true,
+          "type": "text",
+          "tooltip": "ID Of the Object to get.",
+          "description": "ID Of the Object to get."
+        }
+      ],
+      "enabled": true
     },
     {
       "operation": "get_manifest_by_collection_id",
@@ -220,55 +270,6 @@
           "type": "datetime",
           "tooltip": "Filter the result set to only include the items added before the specified time.",
           "description": "Filter the result set to only include the items added before the specified time."
-        }
-      ],
-      "enabled": true
-    },
-    {
-      "operation": "get_objects_by_object_id",
-      "title": "Get Object By Object ID",
-      "description": "Returns general information for the specific object in one collection.",
-      "category": "investigation",
-      "annotation": "get_objects_by_object_id",
-      "output_schema": {
-        "spec_version": "",
-        "type": "",
-        "objects": [
-          {
-            "id": "",
-            "type": "",
-            "created": "",
-            "modified": "",
-            "labels": [
-            ],
-            "name": "",
-            "description": "",
-            "pattern": "",
-            "valid_from": ""
-          }
-        ],
-        "id": ""
-      },
-      "parameters": [
-        {
-          "title": "collection ID",
-          "name": "collectionID",
-          "visible": true,
-          "required": true,
-          "editable": true,
-          "type": "text",
-          "tooltip": "Returns general information about the collection, such as id, title, description, can_read, can_write and media_types.",
-          "description": "Returns general information about the collection, such as id, title, description, can_read, can_write and media_types."
-        },
-        {
-          "title": "Object ID",
-          "name": "objectID",
-          "visible": true,
-          "required": true,
-          "editable": true,
-          "type": "text",
-          "tooltip": "ID Of the Object to get.",
-          "description": "ID Of the Object to get."
         }
       ],
       "enabled": true

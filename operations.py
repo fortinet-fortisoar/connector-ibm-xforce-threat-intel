@@ -11,10 +11,10 @@ import requests
 from connectors.core.connector import get_logger, ConnectorError
 from connectors.cyops_utilities.builtins import create_file_from_string
 
-logger = get_logger('xforce_taxii2_feed')
+logger = get_logger('ibm-xforce-threat-intel-feed')
 
 
-class TaxiiFeed(object):
+class TaxiiClient(object):
     def __init__(self, config):
         self.server_url = config.get('server_url')
         if not self.server_url.startswith('https://'):
@@ -85,80 +85,104 @@ def get_params(params):
 
 
 def get_output_schema(config, params, *args, **kwargs):
-    if params.get('file_response'):
-        return ({
-            "md5": "",
-            "sha1": "",
-            "sha256": "",
-            "filename": "",
-            "content_length": "",
-            "content_type": ""
-        })
-    else:
-        return ({
-            "spec_version": "",
-            "type": "",
-            "objects": [
-                {
-                    "id": "",
-                    "type": "",
-                    "created": "",
-                    "modified": "",
-                    "labels": [
-                    ],
-                    "name": "",
-                    "description": "",
-                    "pattern": "",
-                    "valid_from": ""
-                }
-            ]
-        })
+    try:
+        if params.get('file_response'):
+            return ({
+                "md5": "",
+                "sha1": "",
+                "sha256": "",
+                "filename": "",
+                "content_length": "",
+                "content_type": ""
+            })
+        else:
+            return ({
+                "spec_version": "",
+                "type": "",
+                "objects": [
+                    {
+                        "id": "",
+                        "type": "",
+                        "created": "",
+                        "modified": "",
+                        "labels": [
+                        ],
+                        "name": "",
+                        "description": "",
+                        "pattern": "",
+                        "valid_from": ""
+                    }
+                ]
+            })
+    except Exception as e:
+        logger.exception('An exception occurred {}'.format(e))
+        raise ConnectorError('An exception occurred {}'.format(e))
 
 
 def get_api_root_information(config, params):
-    taxii = TaxiiFeed(config)
-    params = get_params(params)
-    return taxii.make_request_taxii(params=params)
+    try:
+        taxii = TaxiiClient(config)
+        params = get_params(params)
+        return taxii.make_request_taxii(params=params)
+    except Exception as e:
+        logger.exception('An exception occurred {}'.format(e))
+        raise ConnectorError('An exception occurred {}'.format(e))
 
 
 def get_collections(config, params):
-    taxii = TaxiiFeed(config)
-    params = get_params(params)
-    if params:
-        response = taxii.make_request_taxii(endpoint='collections/' + params['collectionID'])
-    else:
-        response = taxii.make_request_taxii(endpoint='collections')
-    if response.get('collections'):
-        return response
-    else:
-        return {'collections': [response]}
+    try:
+        taxii = TaxiiClient(config)
+        params = get_params(params)
+        if params:
+            response = taxii.make_request_taxii(endpoint='collections/' + params['collectionID'])
+        else:
+            response = taxii.make_request_taxii(endpoint='collections')
+        if response.get('collections'):
+            return response
+        else:
+            return {'collections': [response]}
+    except Exception as e:
+        logger.exception('An exception occurred {}'.format(e))
+        raise ConnectorError('An exception occurred {}'.format(e))
 
 
 def get_objects_by_collection_id(config, params):
-    taxii = TaxiiFeed(config)
-    params = get_params(params)
-    wanted_keys = set(['added_after', 'added_before'])
-    query_params = {k: params[k] for k in params.keys() & wanted_keys}
-    response = taxii.make_request_stix(endpoint='collections/' + params['collectionID'] + '/objects',
-                                       params=query_params)
-    if params.get('file_response'):
-        return create_file_from_string(contents=response, filename=params.get('filename'))
-    else:
-        return response
+    try:
+        taxii = TaxiiClient(config)
+        params = get_params(params)
+        wanted_keys = set(['added_after', 'added_before'])
+        query_params = {k: params[k] for k in params.keys() & wanted_keys}
+        response = taxii.make_request_stix(endpoint='collections/' + params['collectionID'] + '/objects',
+                                           params=query_params)
+        if params.get('file_response'):
+            return create_file_from_string(contents=response, filename=params.get('filename'))
+        else:
+            return response
+    except Exception as e:
+        logger.exception('An exception occurred {}'.format(e))
+        raise ConnectorError('An exception occurred {}'.format(e))
 
 
 def get_manifest_by_collection_id(config, params):
-    taxii = TaxiiFeed(config)
-    params = get_params(params)
-    wanted_keys = set(['added_after', 'added_before'])
-    query_params = {k: params[k] for k in params.keys() & wanted_keys}
-    return taxii.make_request_taxii(endpoint='collections/' + params['collectionID'] + '/manifest', params=query_params)
+    try:
+        taxii = TaxiiClient(config)
+        params = get_params(params)
+        wanted_keys = set(['added_after', 'added_before'])
+        query_params = {k: params[k] for k in params.keys() & wanted_keys}
+        return taxii.make_request_taxii(endpoint='collections/' + params['collectionID'] + '/manifest', params=query_params)
+    except Exception as e:
+        logger.exception('An exception occurred {}'.format(e))
+        raise ConnectorError('An exception occurred {}'.format(e))
 
 
 def get_objects_by_object_id(config, params):
-    taxii = TaxiiFeed(config)
-    params = get_params(params)
-    return taxii.make_request_stix(endpoint='collections/' + params['collectionID'] + '/objects/' + params['objectID'])
+    try:
+        taxii = TaxiiClient(config)
+        params = get_params(params)
+        return taxii.make_request_stix(endpoint='collections/' + params['collectionID'] + '/objects/' + params['objectID'])
+    except Exception as e:
+        logger.exception('An exception occurred {}'.format(e))
+        raise ConnectorError('An exception occurred {}'.format(e))
 
 
 def _check_health(config):

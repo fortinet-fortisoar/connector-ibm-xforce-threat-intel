@@ -9,13 +9,13 @@ from connectors.core.connector import Connector, get_logger, ConnectorError
 
 from .operations import operations, _check_health
 
-logger = get_logger('xforce_taxii2_feed')
+logger = get_logger('ibm-xforce-threat-intel-feed')
 
 
-class TaxiiFeedCon(Connector):
+class IBMXForceFeed(Connector):
     def execute(self, config, operation, params, **kwargs):
-        logger.info('In execute() Operation: {}'.format(operation))
         try:
+            logger.info('In execute() Operation: {}'.format(operation))
             operation = operations.get(operation)
             return operation(config, params)
         except Exception as err:
@@ -23,4 +23,8 @@ class TaxiiFeedCon(Connector):
             raise ConnectorError('{}'.format(err))
 
     def check_health(self, config):
-        return _check_health(config)
+        try:
+            return _check_health(config)
+        except Exception as e:
+            logger.exception("An exception occurred {}".format(e))
+            raise ConnectorError(e)
