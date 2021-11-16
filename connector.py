@@ -19,7 +19,7 @@ class IBMXForceFeed(Connector):
             operation = operations.get(operation)
             return operation(config, params)
         except Exception as err:
-            logger.error('{}'.format(err))
+            logger.error('An exception occurred {}'.format(err))
             raise ConnectorError('{}'.format(err))
 
     def check_health(self, config):

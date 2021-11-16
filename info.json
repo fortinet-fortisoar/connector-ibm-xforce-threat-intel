@@ -1,6 +1,6 @@
 {
   "name": "ibm-xforce-threat-intel-feed",
-  "label": "IBM X-Force Threat Intel Feed",
+  "label": "IBM X-Force Threat Intelligence Feed",
   "description": "IBM X-Force Threat Intelligence Feed Integration",
   "publisher": "Fortinet",
   "cs_approved": true,
@@ -118,7 +118,7 @@
           "description": "Returns general information about the collection, such as id, title, description, can_read, can_write and media_types."
         },
         {
-          "title": "Added After",
+          "title": "Created After",
           "name": "added_after",
           "visible": true,
           "required": false,
@@ -128,7 +128,7 @@
           "description": "Filter the result set to only include the items added after the specified time."
         },
         {
-          "title": "Added Before",
+          "title": "Created Before",
           "name": "added_before",
           "visible": true,
           "required": false,
@@ -148,13 +148,13 @@
           "onchange": {
             "true": [
               {
-                "title": "Save Response to File",
+                "title": "Filename",
                 "name": "filename",
                 "type": "text",
                 "visible": true,
                 "editable": true,
                 "required": false,
-                "placeholder": "Eg. demo.json",
+                "placeholder": "Eg. feeds.json",
                 "tooltip": "The file will be created under /tmp"
               }
             ]
@@ -202,14 +202,14 @@
       },
       "parameters": [
         {
-          "title": "collection ID",
+          "title": "Collection ID",
           "name": "collectionID",
           "visible": true,
           "required": true,
           "editable": true,
           "type": "text",
-          "tooltip": "Specify the Collection ID, who's Object information you want to retrieve.",
-          "description": "Specify the Collection ID, who's Object information you want to retrieve"
+          "tooltip": "Collection ID containing the Object.",
+          "description": "Collection ID containing the Object."
         },
         {
           "title": "Object ID",
@@ -218,8 +218,8 @@
           "required": true,
           "editable": true,
           "type": "text",
-          "tooltip": "ID Of the Object to get.",
-          "description": "ID Of the Object to get."
+          "tooltip": "ID of the object to be fetched.",
+          "description": "ID of the object to be fetched."
         }
       ],
       "enabled": true
@@ -242,7 +242,7 @@
       },
       "parameters": [
         {
-          "title": "collection ID",
+          "title": "Collection ID",
           "name": "collectionID",
           "visible": true,
           "required": true,
@@ -252,7 +252,7 @@
           "description": "Returns general information about the collection, such as id, title, description, can_read, can_write and media_types."
         },
         {
-          "title": "Added After",
+          "title": "Created After",
           "name": "added_after",
           "visible": true,
           "required": false,
@@ -262,7 +262,7 @@
           "description": "Filter the result set to only include the items added after the specified time."
         },
         {
-          "title": "Added Before",
+          "title": "Created Before",
           "name": "added_before",
           "visible": true,
           "required": false,
