@@ -101,7 +101,7 @@ def get_collections(config, params):
     taxii = TaxiiClient(config)
     params = get_params(params)
     if params:
-        response = taxii.make_request_taxii(endpoint='collections/' + params['collectionID'],
+        response = taxii.make_request_taxii(endpoint='collections/' + str(params['collectionID']),
                                             headers={'Accept': 'application/vnd.oasis.taxii+json'})
     else:
         response = taxii.make_request_taxii(endpoint='collections',
@@ -117,7 +117,7 @@ def get_objects_by_collection_id(config, params):
     params = get_params(params)
     wanted_keys = set(['added_after', 'added_before'])
     query_params = {k: params[k] for k in params.keys() & wanted_keys}
-    response = taxii.make_request_taxii(endpoint='collections/' + params['collectionID'] + '/objects',
+    response = taxii.make_request_taxii(endpoint='collections/' + str(params['collectionID']) + '/objects',
                                         params=query_params, headers={'Accept': 'application/vnd.oasis.stix+json'})
     if params.get('file_response'):
         return create_file_from_string(contents=response, filename=params.get('filename'))
@@ -130,7 +130,7 @@ def get_manifest_by_collection_id(config, params):
     params = get_params(params)
     wanted_keys = set(['added_after', 'added_before'])
     query_params = {k: params[k] for k in params.keys() & wanted_keys}
-    return taxii.make_request_taxii(endpoint='collections/' + params['collectionID'] + '/manifest',
+    return taxii.make_request_taxii(endpoint='collections/' + str(params['collectionID']) + '/manifest',
                                     params=query_params, headers={'Accept': 'application/vnd.oasis.taxii+json'})
 
 
@@ -138,7 +138,7 @@ def get_objects_by_object_id(config, params):
     taxii = TaxiiClient(config)
     params = get_params(params)
     return taxii.make_request_taxii(headers={'Accept': 'application/vnd.oasis.stix+json'},
-                                    endpoint='collections/' + params['collectionID'] + '/objects/' + params['objectID'])
+                                    endpoint='collections/' + str(params['collectionID']) + '/objects/' + params['objectID'])
 
 
 def _check_health(config):
