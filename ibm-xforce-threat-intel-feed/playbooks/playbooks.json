@@ -1,399 +1,540 @@
 {
-    "type": "workflow_collections",
-    "data": [
+  "type": "workflow_collections",
+  "data": [
+    {
+      "@type": "WorkflowCollection",
+      "name": "Sample - IBM X-Force Threat Intelligence Feed - 1.0.0",
+      "description": "Sample playbooks for \"IBM X-Force Threat Intelligence Feed\" connector. If you are planning to use any of the sample playbooks in your environment, ensure that you clone those playbooks and move them to a different collection, since the sample playbook collection gets deleted during connector upgrade and delete.",
+      "visible": true,
+      "image": "/api/3/images/99f06d41-7298-4748-8886-982b9ceb1947",
+      "uuid": "8af111af-220b-4492-82e4-4c6cdce6f667",
+      "id": 149,
+      "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
+      "createDate": 1639414521,
+      "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
+      "modifyDate": 1639414521,
+      "recordTags": [],
+      "workflows": [
         {
-            "uuid": "0eb95cf9-2d46-4a68-b18d-aea46d17bd16",
-            "@type": "WorkflowCollection",
-            "workflows": [
-                {
-                    "@type": "Workflow",
-                    "uuid": "b8a206d3-84e2-4282-bc8a-444d2a48d1d7",
-                    "collection": "/api/3/workflow_collections/0eb95cf9-2d46-4a68-b18d-aea46d17bd16",
-                    "steps": [
-                        {
-                            "uuid": "9fb3557c-7805-4415-b539-c0f04d22fd50",
-                            "@type": "WorkflowStep",
-                            "name": "Alerts",
-                            "description": null,
-                            "status": null,
-                            "arguments": {
-                                "route": "23df9d7c-2092-4a8b-be06-6e6aa0f0044b",
-                                "title": "IBM X-Force Threat Intelligence Feed: Get API Root Information",
-                                "resources": [
-                                    "alerts"
-                                ],
-                                "inputVariables": [],
-                                "step_variables": {
-                                    "input": {
-                                        "records": "{{vars.input.records[0]}}"
-                                    }
-                                },
-                                "noRecordExecution": true,
-                                "singleRecordExecution": false
-                            },
-                            "left": "20",
-                            "top": "20",
-                            "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
-                        },
-                        {
-                            "uuid": "6cd82167-a5bb-4144-ba94-6d137c6f0d9d",
-                            "@type": "WorkflowStep",
-                            "name": "Get API Root Information",
-                            "description": null,
-                            "status": null,
-                            "arguments": {
-                                "name": "IBM X-Force Threat Intelligence Feed",
-                                "config": "''",
-                                "params": [],
-                                "version": "1.0.0",
-                                "connector": "ibm-xforce-threat-intel-feed",
-                                "operation": "get_api_root_information",
-                                "operationTitle": "Get API Root Information",
-                                "step_variables": {
-                                    "output_data": "{{vars.result}}"
-                                }
-                            },
-                            "left": "188",
-                            "top": "120",
-                            "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
-                        }
-                    ],
-                    "triggerLimit": null,
-                    "description": "Returns information contains title, description, TAXII versions and maximum size of the content body for the specified TAXII server.",
-                    "name": "Get API Root Information",
-                    "tag": "#IBM X-Force Threat Intelligence Feed",
-                    "isActive": false,
-                    "singleRecordExecution": false,
-                    "parameters": [],
-                    "synchronous": false,
-                    "triggerStep": "/api/3/workflow_steps/9fb3557c-7805-4415-b539-c0f04d22fd50",
-                    "routes": [
-                        {
-                            "@type": "WorkflowRoute",
-                            "uuid": "a541d69a-8d3b-4dd0-95bd-ef5355b0df73",
-                            "label": null,
-                            "isExecuted": false,
-                            "name": "Alerts -> Get API Root Information",
-                            "sourceStep": "/api/3/workflow_steps/9fb3557c-7805-4415-b539-c0f04d22fd50",
-                            "targetStep": "/api/3/workflow_steps/6cd82167-a5bb-4144-ba94-6d137c6f0d9d"
-                        }
-                    ]
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Collections",
+          "aliasName": null,
+          "tag": "#IBM X-Force Threat Intelligence Feed",
+          "description": "Retrieves a list of public/private/shared collection resources to which the users have access from IBM X-Force Threat Intelligence Feed, based on the collection ID you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1639414759,
+          "collection": "/api/3/workflow_collections/8af111af-220b-4492-82e4-4c6cdce6f667",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/d6313406-67b1-42f3-a729-ca0c33769c0d",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Collections",
+              "description": null,
+              "arguments": {
+                "name": "IBM X-Force Threat Intelligence Feed",
+                "config": "71d2f6e6-9b83-4834-aa6d-a527a53b3cc1",
+                "params": {
+                  "collectionID": "botnets"
                 },
-                {
-                    "@type": "Workflow",
-                    "uuid": "1ae891ef-d3e7-4d8f-acf8-3af8e766816d",
-                    "collection": "/api/3/workflow_collections/0eb95cf9-2d46-4a68-b18d-aea46d17bd16",
-                    "steps": [
-                        {
-                            "uuid": "e5cc6afe-4729-431f-84a3-86c71cfb840c",
-                            "@type": "WorkflowStep",
-                            "name": "Alerts",
-                            "description": null,
-                            "status": null,
-                            "arguments": {
-                                "route": "259bdfb5-eac9-4f95-b9c2-8d5499fcdc4a",
-                                "title": "IBM X-Force Threat Intelligence Feed: Get Collections",
-                                "resources": [
-                                    "alerts"
-                                ],
-                                "inputVariables": [],
-                                "step_variables": {
-                                    "input": {
-                                        "records": "{{vars.input.records[0]}}"
-                                    }
-                                },
-                                "noRecordExecution": true,
-                                "singleRecordExecution": false
-                            },
-                            "left": "20",
-                            "top": "20",
-                            "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
-                        },
-                        {
-                            "uuid": "791717f4-3c71-4f2d-b0bf-edd6482d6aff",
-                            "@type": "WorkflowStep",
-                            "name": "Get Collections",
-                            "description": null,
-                            "status": null,
-                            "arguments": {
-                                "name": "IBM X-Force Threat Intelligence Feed",
-                                "config": "''",
-                                "params": {
-                                    "collectionID": ""
-                                },
-                                "version": "1.0.0",
-                                "connector": "ibm-xforce-threat-intel-feed",
-                                "operation": "get_collections",
-                                "operationTitle": "Get Collections",
-                                "step_variables": {
-                                    "output_data": "{{vars.result}}"
-                                }
-                            },
-                            "left": "188",
-                            "top": "120",
-                            "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
-                        }
-                    ],
-                    "triggerLimit": null,
-                    "description": "Returns a list of public/private/shared collection resources which users has the access.",
-                    "name": "Get Collections",
-                    "tag": "#IBM X-Force Threat Intelligence Feed",
-                    "isActive": false,
-                    "singleRecordExecution": false,
-                    "parameters": [],
-                    "synchronous": false,
-                    "triggerStep": "/api/3/workflow_steps/e5cc6afe-4729-431f-84a3-86c71cfb840c",
-                    "routes": [
-                        {
-                            "@type": "WorkflowRoute",
-                            "uuid": "38fb9aa7-9d13-4db5-b7c9-8edc09c59b44",
-                            "label": null,
-                            "isExecuted": false,
-                            "name": "Alerts -> Get Collections",
-                            "sourceStep": "/api/3/workflow_steps/e5cc6afe-4729-431f-84a3-86c71cfb840c",
-                            "targetStep": "/api/3/workflow_steps/791717f4-3c71-4f2d-b0bf-edd6482d6aff"
-                        }
-                    ]
-                },
-                {
-                    "@type": "Workflow",
-                    "uuid": "78e6acea-98a6-4d52-a36f-e02f8c08e225",
-                    "collection": "/api/3/workflow_collections/0eb95cf9-2d46-4a68-b18d-aea46d17bd16",
-                    "steps": [
-                        {
-                            "uuid": "1c7c812c-a811-4861-9d36-c9dc7198e8cf",
-                            "@type": "WorkflowStep",
-                            "name": "Alerts",
-                            "description": null,
-                            "status": null,
-                            "arguments": {
-                                "route": "ffb4b177-5a83-4528-8037-4f75dc1c9e6d",
-                                "title": "IBM X-Force Threat Intelligence Feed: Get Objects By Collection ID",
-                                "resources": [
-                                    "alerts"
-                                ],
-                                "inputVariables": [],
-                                "step_variables": {
-                                    "input": {
-                                        "records": "{{vars.input.records[0]}}"
-                                    }
-                                },
-                                "noRecordExecution": true,
-                                "singleRecordExecution": false
-                            },
-                            "left": "20",
-                            "top": "20",
-                            "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
-                        },
-                        {
-                            "uuid": "94dc4f62-d915-49be-b0f2-cab405bf333d",
-                            "@type": "WorkflowStep",
-                            "name": "Get Objects By Collection ID",
-                            "description": null,
-                            "status": null,
-                            "arguments": {
-                                "name": "IBM X-Force Threat Intelligence Feed",
-                                "config": "''",
-                                "params": {
-                                    "collectionID": "",
-                                    "added_after": "",
-                                    "added_before": "",
-                                    "file_response": true
-                                },
-                                "version": "1.0.0",
-                                "connector": "ibm-xforce-threat-intel-feed",
-                                "operation": "get_objects_by_collection_id",
-                                "operationTitle": "Get Objects By Collection ID",
-                                "step_variables": {
-                                    "output_data": "{{vars.result}}"
-                                }
-                            },
-                            "left": "188",
-                            "top": "120",
-                            "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
-                        }
-                    ],
-                    "triggerLimit": null,
-                    "description": "Retrieve all available objects in a Collection.",
-                    "name": "Get Objects By Collection ID",
-                    "tag": "#IBM X-Force Threat Intelligence Feed",
-                    "isActive": false,
-                    "singleRecordExecution": false,
-                    "parameters": [],
-                    "synchronous": false,
-                    "triggerStep": "/api/3/workflow_steps/1c7c812c-a811-4861-9d36-c9dc7198e8cf",
-                    "routes": [
-                        {
-                            "@type": "WorkflowRoute",
-                            "uuid": "c8aed8e8-433b-4d1c-8c90-28e90d0e04f3",
-                            "label": null,
-                            "isExecuted": false,
-                            "name": "Alerts -> Get Objects By Collection ID",
-                            "sourceStep": "/api/3/workflow_steps/1c7c812c-a811-4861-9d36-c9dc7198e8cf",
-                            "targetStep": "/api/3/workflow_steps/94dc4f62-d915-49be-b0f2-cab405bf333d"
-                        }
-                    ]
-                },
-                {
-                    "@type": "Workflow",
-                    "uuid": "d773a145-9466-4b3e-902e-158d1eef5938",
-                    "collection": "/api/3/workflow_collections/0eb95cf9-2d46-4a68-b18d-aea46d17bd16",
-                    "steps": [
-                        {
-                            "uuid": "dae67b44-0c61-42a9-bfa5-15f580dcafdd",
-                            "@type": "WorkflowStep",
-                            "name": "Alerts",
-                            "description": null,
-                            "status": null,
-                            "arguments": {
-                                "route": "e464ee83-c987-4289-8e89-eb6d1e825d61",
-                                "title": "IBM X-Force Threat Intelligence Feed: Get Object By Object ID",
-                                "resources": [
-                                    "alerts"
-                                ],
-                                "inputVariables": [],
-                                "step_variables": {
-                                    "input": {
-                                        "records": "{{vars.input.records[0]}}"
-                                    }
-                                },
-                                "noRecordExecution": true,
-                                "singleRecordExecution": false
-                            },
-                            "left": "20",
-                            "top": "20",
-                            "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
-                        },
-                        {
-                            "uuid": "38ab1232-73e6-4d7c-a77c-7db23d0a432b",
-                            "@type": "WorkflowStep",
-                            "name": "Get Object By Object ID",
-                            "description": null,
-                            "status": null,
-                            "arguments": {
-                                "name": "IBM X-Force Threat Intelligence Feed",
-                                "config": "''",
-                                "params": {
-                                    "collectionID": "",
-                                    "objectID": ""
-                                },
-                                "version": "1.0.0",
-                                "connector": "ibm-xforce-threat-intel-feed",
-                                "operation": "get_objects_by_object_id",
-                                "operationTitle": "Get Object By Object ID",
-                                "step_variables": {
-                                    "output_data": "{{vars.result}}"
-                                }
-                            },
-                            "left": "188",
-                            "top": "120",
-                            "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
-                        }
-                    ],
-                    "triggerLimit": null,
-                    "description": "Returns general information for the specific object of a collection.",
-                    "name": "Get Object By Object ID",
-                    "tag": "#IBM X-Force Threat Intelligence Feed",
-                    "isActive": false,
-                    "singleRecordExecution": false,
-                    "parameters": [],
-                    "synchronous": false,
-                    "triggerStep": "/api/3/workflow_steps/dae67b44-0c61-42a9-bfa5-15f580dcafdd",
-                    "routes": [
-                        {
-                            "@type": "WorkflowRoute",
-                            "uuid": "bfea14f5-95df-4dfe-a6b5-bce871bfc4c2",
-                            "label": null,
-                            "isExecuted": false,
-                            "name": "Alerts -> Get Object By Object ID",
-                            "sourceStep": "/api/3/workflow_steps/dae67b44-0c61-42a9-bfa5-15f580dcafdd",
-                            "targetStep": "/api/3/workflow_steps/38ab1232-73e6-4d7c-a77c-7db23d0a432b"
-                        }
-                    ]
-                },
-                {
-                    "@type": "Workflow",
-                    "uuid": "2d36eed5-f40f-4aff-83a4-686f14e55a02",
-                    "collection": "/api/3/workflow_collections/0eb95cf9-2d46-4a68-b18d-aea46d17bd16",
-                    "steps": [
-                        {
-                            "uuid": "68cb71ce-da93-443c-bc57-05edc8a27a74",
-                            "@type": "WorkflowStep",
-                            "name": "Alerts",
-                            "description": null,
-                            "status": null,
-                            "arguments": {
-                                "route": "f7bb398b-c050-4f88-b0b4-7edbd3b48492",
-                                "title": "IBM X-Force Threat Intelligence Feed: Get Manifest By Collection ID",
-                                "resources": [
-                                    "alerts"
-                                ],
-                                "inputVariables": [],
-                                "step_variables": {
-                                    "input": {
-                                        "records": "{{vars.input.records[0]}}"
-                                    }
-                                },
-                                "noRecordExecution": true,
-                                "singleRecordExecution": false
-                            },
-                            "left": "20",
-                            "top": "20",
-                            "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a"
-                        },
-                        {
-                            "uuid": "ac364067-881d-4ba1-b11b-962d2bff5d33",
-                            "@type": "WorkflowStep",
-                            "name": "Get Manifest By Collection ID",
-                            "description": null,
-                            "status": null,
-                            "arguments": {
-                                "name": "IBM X-Force Threat Intelligence Feed",
-                                "config": "''",
-                                "params": {
-                                    "collectionID": "",
-                                    "added_after": "",
-                                    "added_before": ""
-                                },
-                                "version": "1.0.0",
-                                "connector": "ibm-xforce-threat-intel-feed",
-                                "operation": "get_manifest_by_collection_id",
-                                "operationTitle": "Get Manifest By Collection ID",
-                                "step_variables": {
-                                    "output_data": "{{vars.result}}"
-                                }
-                            },
-                            "left": "188",
-                            "top": "120",
-                            "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671"
-                        }
-                    ],
-                    "triggerLimit": null,
-                    "description": "Returns manifest information about all available objects.",
-                    "name": "Get Manifest By Collection ID",
-                    "tag": "#IBM X-Force Threat Intelligence Feed",
-                    "isActive": false,
-                    "singleRecordExecution": false,
-                    "parameters": [],
-                    "synchronous": false,
-                    "triggerStep": "/api/3/workflow_steps/68cb71ce-da93-443c-bc57-05edc8a27a74",
-                    "routes": [
-                        {
-                            "@type": "WorkflowRoute",
-                            "uuid": "feffb0d8-153e-4a6d-8e2b-cbbb5f6c682e",
-                            "label": null,
-                            "isExecuted": false,
-                            "name": "Alerts -> Get Manifest By Collection ID",
-                            "sourceStep": "/api/3/workflow_steps/68cb71ce-da93-443c-bc57-05edc8a27a74",
-                            "targetStep": "/api/3/workflow_steps/ac364067-881d-4ba1-b11b-962d2bff5d33"
-                        }
-                    ]
+                "version": "1.0.0",
+                "connector": "ibm-xforce-threat-intel-feed",
+                "operation": "get_collections",
+                "operationTitle": "Get Collections",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
                 }
-            ],
-            "name": "Sample - IBM X-Force Threat Intelligence Feed - 1.0.0",
-            "description": "IBM X-Force Threat Intelligence Feed Integration",
-            "visible": true,
-            "image": null
+              },
+              "status": null,
+              "top": "120",
+              "left": "180",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "2a10dff6-8a10-4863-a4f5-9b584d52bc27",
+              "id": 7341
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "2f736ba6-28cb-48c0-93ef-3d15bfad219f",
+                "title": "IBM X-Force Threat Intelligence Feed: Get Collections",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "d6313406-67b1-42f3-a729-ca0c33769c0d",
+              "id": 7340
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Alerts -> Get Collections",
+              "targetStep": "/api/3/workflow_steps/2a10dff6-8a10-4863-a4f5-9b584d52bc27",
+              "sourceStep": "/api/3/workflow_steps/d6313406-67b1-42f3-a729-ca0c33769c0d",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "ecd0cd64-21ac-40b6-88f5-cf1b2078b10f"
+            }
+          ],
+          "priority": null,
+          "uuid": "46fd448f-9945-4da7-bf99-49082b190c6b",
+          "recordTags": [
+            "IBM X-Force",
+            "Threat Intelligence Feed"
+          ],
+          "id": 1526,
+          "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
+          "createDate": 1639414521,
+          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "modifyDate": 1639416125,
+          "owners": [],
+          "isPrivate": false
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get API Root Information",
+          "aliasName": null,
+          "tag": "#IBM X-Force Threat Intelligence Feed",
+          "description": "Retrieves information containing title, description, TAXII versions, and maximum size of the content body for the specified TAXII server from IBM X-Force Threat Intelligence Feed.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1639414663,
+          "collection": "/api/3/workflow_collections/8af111af-220b-4492-82e4-4c6cdce6f667",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/2a05462b-2c23-4f6e-9580-c144fc3e7b17",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "9a4c7a45-37ad-44ea-8f33-08c0195a8775",
+                "title": "IBM X-Force Threat Intelligence Feed: Get API Root Information",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "2a05462b-2c23-4f6e-9580-c144fc3e7b17",
+              "id": 7338
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get API Root Information",
+              "description": null,
+              "arguments": {
+                "name": "IBM X-Force Threat Intelligence Feed",
+                "config": "''",
+                "params": [],
+                "version": "1.0.0",
+                "connector": "ibm-xforce-threat-intel-feed",
+                "operation": "get_api_root_information",
+                "operationTitle": "Get API Root Information",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "120",
+              "left": "188",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "3609b92b-82a3-456f-b332-754a2084f439",
+              "id": 7339
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Alerts -> Get API Root Information",
+              "targetStep": "/api/3/workflow_steps/3609b92b-82a3-456f-b332-754a2084f439",
+              "sourceStep": "/api/3/workflow_steps/2a05462b-2c23-4f6e-9580-c144fc3e7b17",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "78b8b227-7bff-421c-b95b-496358b9b324"
+            }
+          ],
+          "priority": null,
+          "uuid": "5b8639f2-78e1-4b36-9000-540260c75537",
+          "recordTags": [
+            "IBM X-Force",
+            "Threat Intelligence Feed"
+          ],
+          "id": 1525,
+          "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
+          "createDate": 1639414521,
+          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "modifyDate": 1639416125,
+          "owners": [],
+          "isPrivate": false
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Objects By Collection ID",
+          "aliasName": null,
+          "tag": "#IBM X-Force Threat Intelligence Feed",
+          "description": "Retrieves all available objects from a collection to which the users have access from IBM X-Force Threat Intelligence Feed, based on the collection ID and other input parameters you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1639416104,
+          "collection": "/api/3/workflow_collections/8af111af-220b-4492-82e4-4c6cdce6f667",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/e23fc754-091e-4067-ba68-aa743a8a6426",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Objects By Collection ID",
+              "description": null,
+              "arguments": {
+                "name": "IBM X-Force Threat Intelligence Feed",
+                "config": "71d2f6e6-9b83-4834-aa6d-a527a53b3cc1",
+                "params": {
+                  "filename": "feed.json",
+                  "added_after": "",
+                  "added_before": "",
+                  "collectionID": "guid:f26ebe1c3bd7992039b53bb8c553d7ca",
+                  "file_response": true
+                },
+                "version": "1.0.0",
+                "connector": "ibm-xforce-threat-intel-feed",
+                "operation": "get_objects_by_collection_id",
+                "operationTitle": "Get Objects By Collection ID",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "120",
+              "left": "180",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "163fb4a4-d072-4124-8abd-3d5dbc69a916",
+              "id": 7343
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Attachment",
+              "description": null,
+              "arguments": {
+                "params": {
+                  "name": "my_demo_attachment",
+                  "filename": "{{vars.steps.Get_Objects_By_Collection_ID.data.filename}}",
+                  "description": "",
+                  "request_headers": "",
+                  "multipart_headers": "",
+                  "extra_multipart_fields": ""
+                },
+                "version": "3.1.2",
+                "connector": "cyops_utilities",
+                "operation": "create_cyops_attachment",
+                "operationTitle": "File: Create Attachment from File",
+                "step_variables": []
+              },
+              "status": null,
+              "top": "220",
+              "left": "380",
+              "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+              "uuid": "8d8dc31a-48bf-4a17-93ff-38c77a99706d",
+              "id": 7348
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "d9b8e549-3ec5-4b96-883e-4f82d3d3ad4c",
+                "title": "IBM X-Force Threat Intelligence Feed: Get Objects By Collection ID",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "e23fc754-091e-4067-ba68-aa743a8a6426",
+              "id": 7342
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Alerts -> Get Objects By Collection ID",
+              "targetStep": "/api/3/workflow_steps/163fb4a4-d072-4124-8abd-3d5dbc69a916",
+              "sourceStep": "/api/3/workflow_steps/e23fc754-091e-4067-ba68-aa743a8a6426",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "69d7e0e6-0d5d-470d-ba48-74976a8bf4df"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Get Objects By Collection ID -> Create Attachment",
+              "targetStep": "/api/3/workflow_steps/8d8dc31a-48bf-4a17-93ff-38c77a99706d",
+              "sourceStep": "/api/3/workflow_steps/163fb4a4-d072-4124-8abd-3d5dbc69a916",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "b252ac97-5b7d-4ea9-bd80-b7616ddf4d7e"
+            }
+          ],
+          "priority": null,
+          "uuid": "886e6de5-eb55-419a-836b-f074cc34c3e1",
+          "recordTags": [
+            "IBM X-Force",
+            "Threat Intelligence Feed"
+          ],
+          "id": 1527,
+          "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
+          "createDate": 1639414521,
+          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "modifyDate": 1639416125,
+          "owners": [],
+          "isPrivate": false
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Manifest By Collection ID",
+          "aliasName": null,
+          "tag": "#IBM X-Force Threat Intelligence Feed",
+          "description": "Retrieves manifest information about all available objects to which the users have access from IBM X-Force Threat Intelligence Feed, based on the collection ID and other input parameters you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1639415518,
+          "collection": "/api/3/workflow_collections/8af111af-220b-4492-82e4-4c6cdce6f667",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/434c0ae4-4a5d-4f06-9dee-7a391e62ff94",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "10e1addb-4885-472b-b7e5-173a0fb67d9b",
+                "title": "IBM X-Force Threat Intelligence Feed: Get Manifest By Collection ID",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "434c0ae4-4a5d-4f06-9dee-7a391e62ff94",
+              "id": 7346
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Manifest By Collection ID",
+              "description": null,
+              "arguments": {
+                "name": "IBM X-Force Threat Intelligence Feed",
+                "config": "71d2f6e6-9b83-4834-aa6d-a527a53b3cc1",
+                "params": {
+                  "added_after": "",
+                  "added_before": "",
+                  "collectionID": "guid:d2410521b6017720270af3299b051ee8"
+                },
+                "version": "1.0.0",
+                "connector": "ibm-xforce-threat-intel-feed",
+                "operation": "get_manifest_by_collection_id",
+                "operationTitle": "Get Manifest By Collection ID",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "120",
+              "left": "180",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "60203354-ffcd-4b09-8dfc-b44a83d9caa3",
+              "id": 7347
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Alerts -> Get Manifest By Collection ID",
+              "targetStep": "/api/3/workflow_steps/60203354-ffcd-4b09-8dfc-b44a83d9caa3",
+              "sourceStep": "/api/3/workflow_steps/434c0ae4-4a5d-4f06-9dee-7a391e62ff94",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "bc94fbd6-ad95-4899-bb5a-0a8a0a0a59ee"
+            }
+          ],
+          "priority": null,
+          "uuid": "892d44c3-6465-469f-8306-91ee2707eb5f",
+          "recordTags": [
+            "IBM X-Force",
+            "Threat Intelligence Feed"
+          ],
+          "id": 1529,
+          "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
+          "createDate": 1639414521,
+          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "modifyDate": 1639416125,
+          "owners": [],
+          "isPrivate": false
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Object By Object ID",
+          "aliasName": null,
+          "tag": "#IBM X-Force Threat Intelligence Feed",
+          "description": "Retrieves general information for a specific object of a specific collection from IBM X-Force Threat Intelligence Feed, based on the collection ID and object ID you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1639415972,
+          "collection": "/api/3/workflow_collections/8af111af-220b-4492-82e4-4c6cdce6f667",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/7af78a24-10a8-4cfa-a824-1460b7e38725",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "35e826d9-0821-4e3c-911b-98a5e5711b97",
+                "title": "IBM X-Force Threat Intelligence Feed: Get Object By Object ID",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "20",
+              "left": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "7af78a24-10a8-4cfa-a824-1460b7e38725",
+              "id": 7344
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Object By Object ID",
+              "description": null,
+              "arguments": {
+                "name": "IBM X-Force Threat Intelligence Feed",
+                "config": "71d2f6e6-9b83-4834-aa6d-a527a53b3cc1",
+                "params": {
+                  "objectID": "report--37fc5eb8-f09f-40b9-a5c5-5432fa992fdd",
+                  "collectionID": "guid:f26ebe1c3bd7992039b53bb8c553d7ca"
+                },
+                "version": "1.0.0",
+                "connector": "ibm-xforce-threat-intel-feed",
+                "operation": "get_objects_by_object_id",
+                "operationTitle": "Get Object By Object ID",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "120",
+              "left": "180",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "a4ff6453-cc49-456e-bf30-6710958bd15a",
+              "id": 7345
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Alerts -> Get Object By Object ID",
+              "targetStep": "/api/3/workflow_steps/a4ff6453-cc49-456e-bf30-6710958bd15a",
+              "sourceStep": "/api/3/workflow_steps/7af78a24-10a8-4cfa-a824-1460b7e38725",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "a17c5e22-3eb1-4100-a55e-dada7dfa60be"
+            }
+          ],
+          "priority": null,
+          "uuid": "c9e9dee6-97c3-4dff-bcf8-9136b4a43f9c",
+          "recordTags": [
+            "IBM X-Force",
+            "Threat Intelligence Feed"
+          ],
+          "id": 1528,
+          "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
+          "createDate": 1639414521,
+          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "modifyDate": 1639416125,
+          "owners": [],
+          "isPrivate": false
         }
-    ]
+      ]
+    }
+  ],
+  "exported_tags": [
+    "IBM X-Force",
+    "Threat Intelligence Feed"
+  ]
 }
