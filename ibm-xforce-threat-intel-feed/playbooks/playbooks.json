@@ -6,15 +6,246 @@
       "name": "Sample - IBM X-Force Threat Intelligence Feed - 1.0.0",
       "description": "Sample playbooks for \"IBM X-Force Threat Intelligence Feed\" connector. If you are planning to use any of the sample playbooks in your environment, ensure that you clone those playbooks and move them to a different collection, since the sample playbook collection gets deleted during connector upgrade and delete.",
       "visible": true,
-      "image": "/api/3/images/99f06d41-7298-4748-8886-982b9ceb1947",
+      "image": "/api/3/images/41f92b06-d6de-47d7-8fb5-b49f6c64e153",
       "uuid": "8af111af-220b-4492-82e4-4c6cdce6f667",
-      "id": 149,
+      "id": 157,
       "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-      "createDate": 1639414521,
+      "createDate": 1639544077,
       "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-      "modifyDate": 1639414521,
+      "modifyDate": 1639544077,
       "recordTags": [],
       "workflows": [
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "IBM X-Force Threat Intel > Ingest",
+          "aliasName": null,
+          "tag": null,
+          "description": "Fetch Collections from IBM X-Force Threat Intelligence Feed",
+          "isActive": false,
+          "debug": true,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1639544430,
+          "collection": "/api/3/workflow_collections/8af111af-220b-4492-82e4-4c6cdce6f667",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/ec146c95-fca3-4c9f-872d-29607e374240",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Update Pull Time",
+              "description": null,
+              "arguments": {
+                "params": {
+                  "macro": "{{vars.pullTimeMacro}}",
+                  "value": "{{vars.fetchTime}}"
+                },
+                "version": "3.1.2",
+                "connector": "cyops_utilities",
+                "operation": "updatemacro",
+                "operationTitle": "CyOPs: Update Macro",
+                "step_variables": []
+              },
+              "status": null,
+              "top": "840",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+              "uuid": "02631bdf-5f8d-4fc4-b192-602356e202cc",
+              "id": 7446
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Configuration",
+              "description": null,
+              "arguments": {
+                "fetchTime": "{{arrow.get((arrow.utcnow().int_timestamp  | int | abs)).format('YYYY-MM-DDTHH:mm:ss.SSS')+'Z'}}",
+                "pullTimeMacro": "IBMXForceFeedLastPullTime_{{vars['audit_info']['cyops_playbook_iri'].split('/')[-1].replace('-','_')}}"
+              },
+              "status": null,
+              "top": "160",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "5e4364ef-9d7d-4808-a478-66f5ab44b4ab",
+              "id": 7445
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Macro Value",
+              "description": null,
+              "arguments": {
+                "params": {
+                  "iri": "/api/wf/api/dynamic-variable/?name={{vars.pullTimeMacro}}",
+                  "body": "",
+                  "method": "GET"
+                },
+                "version": "3.1.2",
+                "connector": "cyops_utilities",
+                "operation": "make_cyops_request",
+                "operationTitle": "FSR: Make FortiSOAR API Call",
+                "step_variables": []
+              },
+              "status": null,
+              "top": "300",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+              "uuid": "85fe8d2b-414e-49bf-b3a8-93ad9633aed9",
+              "id": 7448
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get All Collections",
+              "description": null,
+              "arguments": {
+                "name": "IBM X-Force Threat Intelligence Feed",
+                "config": "d50acc3c-70e5-4fb2-ac8e-1fb801d75b8b",
+                "params": [],
+                "version": "1.0.0",
+                "connector": "ibm-xforce-threat-intel-feed",
+                "operation": "get_collections",
+                "operationTitle": "Get Collections",
+                "pickFromTenant": false,
+                "step_variables": {
+                  "collections": "{{vars.result.data.collections | json_query(\"[?contains(id, '-')].id\")}}"
+                }
+              },
+              "status": null,
+              "top": "560",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "97a0486c-1687-42a7-a2b4-69ba28aa7e09",
+              "id": 7451
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Ingest records for Each Collection",
+              "description": null,
+              "arguments": {
+                "for_each": {
+                  "item": "{{vars.collections}}",
+                  "parallel": false,
+                  "condition": ""
+                },
+                "arguments": {
+                  "collectionID": "{{vars.item}}",
+                  "lastPullTime": "{{vars.lastPullTime}}"
+                },
+                "apply_async": true,
+                "step_variables": [],
+                "workflowReference": "/api/3/workflows/6528e062-5a91-496b-acce-433f67726367"
+              },
+              "status": null,
+              "top": "700",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/74932bdc-b8b6-4d24-88c4-1a4dfbc524f3",
+              "uuid": "989a6938-eb75-4414-9636-cd67ef591084",
+              "id": 7449
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Extract Value from Response",
+              "description": null,
+              "arguments": {
+                "lastPullTime": "{% if (vars.steps.Get_Macro_Value.data[\"hydra:member\"] | length) > 0%}{{vars.steps.Get_Macro_Value.data[\"hydra:member\"][0].value }}{% else %}{{arrow.get((arrow.utcnow().int_timestamp  | int | abs)).shift(days=-30).format('YYYY-MM-DDTHH:mm:ss.SSS')+'Z'}}{% endif %}"
+              },
+              "status": null,
+              "top": "440",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "b28d1f36-735e-4dc0-9638-c0dd514d8db4",
+              "id": 7447
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  }
+                }
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "uuid": "ec146c95-fca3-4c9f-872d-29607e374240",
+              "id": 7450
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Extract Value from Response -> Get All Collections",
+              "targetStep": "/api/3/workflow_steps/97a0486c-1687-42a7-a2b4-69ba28aa7e09",
+              "sourceStep": "/api/3/workflow_steps/b28d1f36-735e-4dc0-9638-c0dd514d8db4",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "15043fe0-84aa-47ed-bac9-fef08f0caf55"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Get All Collections -> Ingest records for Each Collection",
+              "targetStep": "/api/3/workflow_steps/989a6938-eb75-4414-9636-cd67ef591084",
+              "sourceStep": "/api/3/workflow_steps/97a0486c-1687-42a7-a2b4-69ba28aa7e09",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "4523d011-b2fd-42c1-a612-62e3f21b73db"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Configuration",
+              "targetStep": "/api/3/workflow_steps/5e4364ef-9d7d-4808-a478-66f5ab44b4ab",
+              "sourceStep": "/api/3/workflow_steps/ec146c95-fca3-4c9f-872d-29607e374240",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "578056b6-b296-4b5a-8f92-12a47ae14243"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Ingest records for each collection -> Update Pull Time",
+              "targetStep": "/api/3/workflow_steps/02631bdf-5f8d-4fc4-b192-602356e202cc",
+              "sourceStep": "/api/3/workflow_steps/989a6938-eb75-4414-9636-cd67ef591084",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "aa5a9f63-f33c-4b70-af5f-98a43741f14f"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Configuration -> Get Macro Value",
+              "targetStep": "/api/3/workflow_steps/85fe8d2b-414e-49bf-b3a8-93ad9633aed9",
+              "sourceStep": "/api/3/workflow_steps/5e4364ef-9d7d-4808-a478-66f5ab44b4ab",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "f260ec9e-fb07-4720-840d-b05c2cb48d6a"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Get Macro Value -> Extract Value from Response",
+              "targetStep": "/api/3/workflow_steps/b28d1f36-735e-4dc0-9638-c0dd514d8db4",
+              "sourceStep": "/api/3/workflow_steps/85fe8d2b-414e-49bf-b3a8-93ad9633aed9",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "f69dc3c3-eb0f-46ee-8bee-8b28e56c20b5"
+            }
+          ],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "0ecb3932-02e6-4826-bcb3-7aea1d493142",
+          "recordTags": [
+            "dataingestion",
+            "ingest",
+            "ibm-xforce-threat-intel-feed"
+          ],
+          "id": 1565,
+          "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "createDate": 1639544099,
+          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "modifyDate": 1639544430,
+          "owners": [],
+          "isPrivate": false
+        },
         {
           "@type": "Workflow",
           "triggerLimit": null,
@@ -56,7 +287,7 @@
               "left": "180",
               "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
               "uuid": "2a10dff6-8a10-4863-a4f5-9b584d52bc27",
-              "id": 7341
+              "id": 7434
             },
             {
               "@type": "WorkflowStep",
@@ -82,7 +313,7 @@
               "left": "20",
               "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
               "uuid": "d6313406-67b1-42f3-a729-ca0c33769c0d",
-              "id": 7340
+              "id": 7435
             }
           ],
           "routes": [
@@ -102,11 +333,11 @@
             "IBM X-Force",
             "Threat Intelligence Feed"
           ],
-          "id": 1526,
+          "id": 1560,
           "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "createDate": 1639414521,
-          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "modifyDate": 1639416125,
+          "createDate": 1639544077,
+          "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
+          "modifyDate": 1639544077,
           "owners": [],
           "isPrivate": false
         },
@@ -152,7 +383,7 @@
               "left": "20",
               "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
               "uuid": "2a05462b-2c23-4f6e-9580-c144fc3e7b17",
-              "id": 7338
+              "id": 7436
             },
             {
               "@type": "WorkflowStep",
@@ -175,7 +406,7 @@
               "left": "188",
               "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
               "uuid": "3609b92b-82a3-456f-b332-754a2084f439",
-              "id": 7339
+              "id": 7437
             }
           ],
           "routes": [
@@ -195,11 +426,280 @@
             "IBM X-Force",
             "Threat Intelligence Feed"
           ],
-          "id": 1525,
+          "id": 1561,
           "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "createDate": 1639414521,
+          "createDate": 1639544077,
+          "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
+          "modifyDate": 1639544077,
+          "owners": [],
+          "isPrivate": false
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "> IBM X-Force Threat Intel > Fetch and Create",
+          "aliasName": null,
+          "tag": null,
+          "description": "Fetch and Create Incidents from IBM X-Force Threat Intelligence Feed",
+          "isActive": false,
+          "debug": true,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [
+            "collectionID",
+            "lastPullTime"
+          ],
+          "synchronous": false,
+          "lastModifyDate": 1639544415,
+          "collection": "/api/3/workflow_collections/8af111af-220b-4492-82e4-4c6cdce6f667",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/bd0807dc-0381-46b6-b2d8-ca130e776522",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Record",
+              "description": null,
+              "arguments": {
+                "for_each": {
+                  "item": "{{vars.objects}}",
+                  "__bulk": true,
+                  "parallel": false,
+                  "condition": "",
+                  "batch_size": 1000
+                },
+                "resource": {
+                  "tlp": "{{vars.tlp_resolve_range}}",
+                  "value": "{%if ':value' in vars.item.pattern %}{{ vars.item.pattern.split(\":value = \")[-1].split(\"]\")[0].strip()[1:-1] }}{% elif 'network-traffic' in vars.item.pattern %}{{ vars.item.pattern.split(\"network-traffic:src_ref.value =\")[-1].split(\"]\")[0].strip()[1:-1] + \":\" + vars.item.pattern.split(\"network-traffic:src_port =\")[1].split(\"AND\")[0].strip()}}{% else %}Malicious Feed{% endif %}",
+                  "__replace": "true",
+                  "firstSeen": "{{(arrow.get(vars.item['created']).int_timestamp)}}",
+                  "reputation": "{{vars.reputation_resolve_range}}",
+                  "description": "<p>{{ vars.item.description }}<br>\nReputation: {{vars.item.labels}}\n</p>",
+                  "indicatorStatus": {
+                    "id": 39,
+                    "@id": "/api/3/picklists/2f5cff61-fbff-4bb3-96be-302b78a9fb47",
+                    "icon": null,
+                    "uuid": "2f5cff61-fbff-4bb3-96be-302b78a9fb47",
+                    "@type": "Picklist",
+                    "color": null,
+                    "display": "TBD",
+                    "@context": "/api/3/contexts/Picklist",
+                    "listName": "/api/3/picklist_names/e6639d57-94a9-432f-a46f-b2b530402077",
+                    "itemValue": "TBD",
+                    "orderIndex": 3
+                  },
+                  "typeofindicator": "{{(vars.item['pattern'].split('=')[0].split('[')[-1].strip().replace(':','-')) | resolveRange(vars.indicators_typeofindicator_map)}}"
+                },
+                "_showJson": false,
+                "operation": "Overwrite",
+                "collection": "/api/3/upsert/indicators",
+                "__recommend": [],
+                "fieldOperation": {
+                  "recordTags": "Overwrite"
+                },
+                "step_variables": []
+              },
+              "status": null,
+              "top": "500",
+              "left": "1260",
+              "stepType": "/api/3/workflow_step_types/2597053c-e718-44b4-8394-4d40fe26d357",
+              "uuid": "0503a027-c925-4796-bd8d-5b4ea4c9f20a",
+              "id": 7452
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Resolve Range",
+              "description": null,
+              "arguments": {
+                "tlp_resolve_range": "{{vars.tlp | resolveRange(vars.tlp_map)}}",
+                "reputation_resolve_range": "{{vars.reputation | resolveRange(vars.reputation_map)}}"
+              },
+              "status": null,
+              "top": "260",
+              "left": "420",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "1feb9e5b-4c85-458c-92f1-403ef93f504e",
+              "id": 7454
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Objects For Collection",
+              "description": null,
+              "arguments": {
+                "name": "IBM X-Force Threat Intelligence Feed",
+                "config": "d50acc3c-70e5-4fb2-ac8e-1fb801d75b8b",
+                "params": {
+                  "added_after": "{{vars.input.params.lastPullTime}}",
+                  "added_before": "",
+                  "collectionID": "{{vars.input.params.collectionID}}",
+                  "file_response": false
+                },
+                "version": "1.0.0",
+                "connector": "ibm-xforce-threat-intel-feed",
+                "operation": "get_objects_by_collection_id",
+                "operationTitle": "Get Objects By Collection ID",
+                "pickFromTenant": false,
+                "step_variables": {
+                  "objects": "{{vars.result.data.objects | json_query(\"[?type=='indicator']\")}}"
+                }
+              },
+              "status": null,
+              "top": "500",
+              "left": "940",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "5b099d9f-f721-4046-a660-39ea78315d10",
+              "id": 7458
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Configuration",
+              "description": null,
+              "arguments": {
+                "tlp": "Red",
+                "expiry": 70,
+                "tlp_map": "{'Red': {{'TrafficLightProtocol'| picklist('Red') }}, 'Amber': {{'TrafficLightProtocol'| picklist('Amber') }}, 'Green': {{'TrafficLightProtocol'| picklist('Green') }}, 'White': {{'TrafficLightProtocol'| picklist('White') }}}",
+                "confidence": 60,
+                "reputation": "Malicious",
+                "reputation_map": "{'Good': {{'IndicatorReputation'| picklist('Good') }}, 'Malicious': {{'IndicatorReputation'| picklist('Malicious') }}, 'Suspicious': {{'IndicatorReputation'| picklist('Suspicious') }}, 'TBD': {{'IndicatorReputation'| picklist('TBD') }}, 'No Reputation Available': {{'IndicatorReputation'| picklist('No Reputation Available') }}}",
+                "indicators_indicatorStatus_map": "{}",
+                "indicators_typeofindicator_map": "{'domain-name-value': {{'IndicatorType'| picklist('Domain') }}, 'file-name': {{'IndicatorType'| picklist('File') }}, 'file-hashes.md5': {{'IndicatorType'| picklist('FileHash-MD5') }}, 'file-hashes.sha1': {{'IndicatorType'| picklist('FileHash-SHA1') }}, 'file-hashes.sha256': {{'IndicatorType'| picklist('FileHash-SHA256') }}, 'network-traffic, ipv4-addr-value, ipv6-addr-value': {{'IndicatorType'| picklist('IP Address') }}, 'windows-registry-key-key': {{'IndicatorType'| picklist('Registry') }}, 'process-name': {{'IndicatorType'| picklist('Process') }}, 'url-value': {{'IndicatorType'| picklist('URL') }}}"
+              },
+              "status": null,
+              "top": "160",
+              "left": "240",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "7702aa78-b960-4e2e-a785-cfa5f53ba971",
+              "id": 7453
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  },
+                  "_configuration_schema": "[\n  {\n    \"title\": \"Confidence\",\n    \"name\": \"confidence\",\n    \"type\": \"integer\",\n    \"tooltip\": \"Default Confidence score to be set for the feeds\",\n    \"required\": false,\n    \"editable\": true,\n    \"visible\": true,\n    \"value\": 50,\n    \"validation\": {\n       \"minlength\": 0,\n       \"maxlength\": 100\n    }\n  },\n  {\n    \"title\": \"Reputation\",\n    \"name\": \"reputation\",\n    \"type\": \"select\",\n    \"tooltip\": \"Default Reputation to be set for the feeds\",\n    \"required\": true,\n    \"editable\": true,\n    \"visible\": true,\n    \"options\": [\"Good\", \"Suspicious\", \"Malicious\", \"No Reputation Available\", \"TBD\"],\n    \"value\": \"Suspicious\"\n  },\n  {\n    \"title\": \"TLP\",\n    \"name\": \"tlp\",\n    \"type\": \"select\",\n    \"tooltip\": \"Default TLP to be set for the feeds\",\n    \"required\": false,\n    \"editable\": true,\n    \"visible\": true,\n    \"options\": [\"Red\", \"Amber\", \"Green\", \"White\"],\n    \"value\": \"White\"\n  },\n  {\n    \"title\": \"Maximum Age (in days)\",\n    \"name\": \"expiry\",\n    \"type\": \"integer\",\n    \"tooltip\": \"Default age for the feeds. The indicator expires on 'valid_until' date unless a different expiry is specified here. If specified, the indicator will be marked expired on valid_from + expiry.\",\n    \"required\": false,\n    \"editable\": true,\n    \"visible\": true\n  }\n]"
+                }
+              },
+              "status": null,
+              "top": "40",
+              "left": "40",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "uuid": "bd0807dc-0381-46b6-b2d8-ca130e776522",
+              "id": 7457
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Is Data Only For Mapping",
+              "description": null,
+              "arguments": {
+                "conditions": [
+                  {
+                    "option": "Yes, For Mapping",
+                    "step_iri": "/api/3/workflow_steps/f6db7f8b-b22c-459c-b379-0c8e800539d2",
+                    "condition": "{{ vars.request.env_setup == true }}",
+                    "step_name": "Return Sample Data"
+                  },
+                  {
+                    "option": "No, For Ingestion",
+                    "default": true,
+                    "step_iri": "/api/3/workflow_steps/5b099d9f-f721-4046-a660-39ea78315d10",
+                    "step_name": "Get Objects For Collection"
+                  }
+                ]
+              },
+              "status": null,
+              "top": "380",
+              "left": "600",
+              "stepType": "/api/3/workflow_step_types/12254cf5-5db7-4b1a-8cb1-3af081924b28",
+              "uuid": "cc8946ba-60fc-4958-9199-866bb687b7e8",
+              "id": 7456
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Return Sample Data",
+              "description": null,
+              "arguments": {
+                "data": "[\n            {\n                \"created\": \"2021-08-19T07:09:16.546999+00:00\",\n                \"created_by_ref\": \"identity--77138c7e-d23e-4966-922c-578c5793e82c\",\n                \"id\": \"indicator--8f21728d-6206-4cb7-9248-fb05c4ecfc9a\",\n                \"indicator_types\": [\n                    \"domain-watchlist\"\n                ],\n                \"modified\": \"2021-08-19T07:09:16.546999+00:00\",\n                \"name\": \"Malicious domains\",\n                \"pattern\": \"[url:value = 'trumphujtebevrot.bit']\",\n                \"pattern_type\": \"stix\",\n                \"spec_version\": \"2.1\",\n                \"type\": \"indicator\",\n                \"valid_from\": \"2021-08-19T00:00:00\",\n                \"valid_until\": \"2021-08-24T00:00:00\"\n            },\n            {\n                \"created\": \"2021-08-19T07:09:16.546999+00:00\",\n                \"created_by_ref\": \"identity--77138c7e-d23e-4966-922c-578c5793e82c\",\n                \"id\": \"indicator--bef17ec9-ac57-482e-9b50-32023c50a728\",\n                \"indicator_types\": [\n                    \"url-watchlist\"\n                ],\n                \"modified\": \"2021-08-19T07:09:16.546999+00:00\",\n                \"name\": \"Malicious URLs\",\n                \"pattern\": \"[url:value = 'http://dood.to/d/8djq6xhrqx31']\",\n                \"pattern_type\": \"stix\",\n                \"spec_version\": \"2.1\",\n                \"type\": \"indicator\",\n                \"valid_from\": \"2021-08-19T00:00:00\",\n                \"valid_until\": \"2021-08-24T00:00:00\"\n            },\n            {\n                \"created\": \"2021-08-19T07:06:55.546999+00:00\",\n                \"id\": \"indicator--6f159a90-752e-4e6b-bebb-28e03c62c175\",\n                \"indicator_types\": [\n                    \"malicious-activity\"\n                ],\n                \"modified\": \"2021-08-19T07:06:55.546999+00:00\",\n                \"name\": \"ZeroAccess\",\n                \"pattern\": \"[network-traffic:src_port = 16464 AND network-traffic:src_ref.value = '24.45.106.57']\",\n                \"pattern_type\": \"stix\",\n                \"spec_version\": \"2.1\",\n                \"type\": \"indicator\",\n                \"valid_from\": \"2021-08-19T00:00:00\",\n                \"valid_until\": \"2021-08-24T00:00:00\"\n            }\n]"
+              },
+              "status": null,
+              "top": "220",
+              "left": "940",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "f6db7f8b-b22c-459c-b379-0c8e800539d2",
+              "id": 7455
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Resolve Range -> Is Data Only For Mapping",
+              "targetStep": "/api/3/workflow_steps/cc8946ba-60fc-4958-9199-866bb687b7e8",
+              "sourceStep": "/api/3/workflow_steps/1feb9e5b-4c85-458c-92f1-403ef93f504e",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "07cc35a7-124a-42db-908f-96d47591bab4"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Get Objects For Collection -> Create Record",
+              "targetStep": "/api/3/workflow_steps/0503a027-c925-4796-bd8d-5b4ea4c9f20a",
+              "sourceStep": "/api/3/workflow_steps/5b099d9f-f721-4046-a660-39ea78315d10",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "42bd2d75-743a-4252-83ec-40254f5cca50"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Is Data Only For Mapping -> Get Objects For Collection",
+              "targetStep": "/api/3/workflow_steps/5b099d9f-f721-4046-a660-39ea78315d10",
+              "sourceStep": "/api/3/workflow_steps/cc8946ba-60fc-4958-9199-866bb687b7e8",
+              "label": "No, For Ingestion",
+              "isExecuted": false,
+              "uuid": "890d1aca-769c-4419-9b05-a2d673b19275"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Is data only for mapping -> Return Sample Data",
+              "targetStep": "/api/3/workflow_steps/f6db7f8b-b22c-459c-b379-0c8e800539d2",
+              "sourceStep": "/api/3/workflow_steps/cc8946ba-60fc-4958-9199-866bb687b7e8",
+              "label": "Yes, For Mapping",
+              "isExecuted": false,
+              "uuid": "965f91ab-631f-4cad-bdcc-4938a41aaac7"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Configuration",
+              "targetStep": "/api/3/workflow_steps/7702aa78-b960-4e2e-a785-cfa5f53ba971",
+              "sourceStep": "/api/3/workflow_steps/bd0807dc-0381-46b6-b2d8-ca130e776522",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "a4e064ad-ce0a-480d-917a-a8c9b35dc31d"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Configuration -> Resolve Range",
+              "targetStep": "/api/3/workflow_steps/1feb9e5b-4c85-458c-92f1-403ef93f504e",
+              "sourceStep": "/api/3/workflow_steps/7702aa78-b960-4e2e-a785-cfa5f53ba971",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "bac2d6a7-c7b3-4554-bead-df2cb628f223"
+            }
+          ],
+          "priority": "/api/3/picklists/2b563c61-ae2c-41c0-a85a-c9709585e3f2",
+          "uuid": "6528e062-5a91-496b-acce-433f67726367",
+          "recordTags": [
+            "dataingestion",
+            "create",
+            "fetch",
+            "ibm-xforce-threat-intel-feed"
+          ],
+          "id": 1566,
+          "createUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
+          "createDate": 1639544099,
           "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "modifyDate": 1639416125,
+          "modifyDate": 1639544414,
           "owners": [],
           "isPrivate": false
         },
@@ -248,7 +748,7 @@
               "left": "180",
               "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
               "uuid": "163fb4a4-d072-4124-8abd-3d5dbc69a916",
-              "id": 7343
+              "id": 7438
             },
             {
               "@type": "WorkflowStep",
@@ -274,7 +774,7 @@
               "left": "380",
               "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
               "uuid": "8d8dc31a-48bf-4a17-93ff-38c77a99706d",
-              "id": 7348
+              "id": 7439
             },
             {
               "@type": "WorkflowStep",
@@ -300,7 +800,7 @@
               "left": "20",
               "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
               "uuid": "e23fc754-091e-4067-ba68-aa743a8a6426",
-              "id": 7342
+              "id": 7440
             }
           ],
           "routes": [
@@ -329,11 +829,11 @@
             "IBM X-Force",
             "Threat Intelligence Feed"
           ],
-          "id": 1527,
+          "id": 1562,
           "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "createDate": 1639414521,
-          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "modifyDate": 1639416125,
+          "createDate": 1639544077,
+          "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
+          "modifyDate": 1639544077,
           "owners": [],
           "isPrivate": false
         },
@@ -379,7 +879,7 @@
               "left": "20",
               "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
               "uuid": "434c0ae4-4a5d-4f06-9dee-7a391e62ff94",
-              "id": 7346
+              "id": 7441
             },
             {
               "@type": "WorkflowStep",
@@ -406,7 +906,7 @@
               "left": "180",
               "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
               "uuid": "60203354-ffcd-4b09-8dfc-b44a83d9caa3",
-              "id": 7347
+              "id": 7442
             }
           ],
           "routes": [
@@ -426,11 +926,11 @@
             "IBM X-Force",
             "Threat Intelligence Feed"
           ],
-          "id": 1529,
+          "id": 1563,
           "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "createDate": 1639414521,
-          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "modifyDate": 1639416125,
+          "createDate": 1639544077,
+          "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
+          "modifyDate": 1639544077,
           "owners": [],
           "isPrivate": false
         },
@@ -476,7 +976,7 @@
               "left": "20",
               "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
               "uuid": "7af78a24-10a8-4cfa-a824-1460b7e38725",
-              "id": 7344
+              "id": 7443
             },
             {
               "@type": "WorkflowStep",
@@ -502,7 +1002,7 @@
               "left": "180",
               "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
               "uuid": "a4ff6453-cc49-456e-bf30-6710958bd15a",
-              "id": 7345
+              "id": 7444
             }
           ],
           "routes": [
@@ -522,11 +1022,11 @@
             "IBM X-Force",
             "Threat Intelligence Feed"
           ],
-          "id": 1528,
+          "id": 1564,
           "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "createDate": 1639414521,
-          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "modifyDate": 1639416125,
+          "createDate": 1639544077,
+          "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
+          "modifyDate": 1639544077,
           "owners": [],
           "isPrivate": false
         }
@@ -534,7 +1034,12 @@
     }
   ],
   "exported_tags": [
+    "dataingestion",
+    "ingest",
+    "ibm-xforce-threat-intel-feed",
     "IBM X-Force",
-    "Threat Intelligence Feed"
+    "Threat Intelligence Feed",
+    "create",
+    "fetch"
   ]
 }

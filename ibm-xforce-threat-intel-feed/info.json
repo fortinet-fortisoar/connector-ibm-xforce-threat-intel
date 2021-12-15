@@ -9,6 +9,10 @@
   "category": "Threat Intelligence",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
+  "ingestion_supported": true,
+  "ingestion_modes": [
+    "scheduled"
+  ],
   "help_online": "https://docs.fortinet.com/document/fortisoar/1.0.0/ibm-x-force-threat-intelligence-feed/204/ibm-x-force-threat-intelligence-feed-v1-0-0",
   "configuration": {
     "fields": [
@@ -92,8 +96,8 @@
           "required": false,
           "editable": true,
           "type": "text",
-          "tooltip": "The ID of the collection whose general information, such as ID, Title, Description, Can Read, Can Write and Media Types, etc. you want to retrieve from IBM X-Force Threat Intelligence Feed.",
-          "description": "The ID of the collection whose general information, such as ID, Title, Description, Can Read, Can Write and Media Types, etc. you want to retrieve from IBM X-Force Threat Intelligence Feed."
+          "tooltip": "Retrive all avaiable objects in a Collection. {collectionID} must be in UUID format. For example: d4ff8286-b4ed-38f7-0520-4cbfcf8216fa.",
+          "description": "Retrive all avaiable objects in a Collection. {collectionID} must be in UUID format. For example: d4ff8286-b4ed-38f7-0520-4cbfcf8216fa."
         }
       ],
       "enabled": true
@@ -208,8 +212,8 @@
           "required": true,
           "editable": true,
           "type": "text",
-          "tooltip": "The ID of the collection that contains the object you want to retrieve from IBM X-Force Threat Intelligence Feed.",
-          "description": "The ID of the collection that contains the object you want to retrieve from IBM X-Force Threat Intelligence Feed."
+          "tooltip": "The ID of the collection must be in UUID format. For example: d4ff8286-b4ed-38f7-0520-4cbfcf8216fa",
+          "description": "The ID of the collection that contains the object you want to retrieve from IBM X-Force Threat Intelligence Feed. ID must be in UUID format. For example: d4ff8286-b4ed-38f7-0520-4cbfcf8216fa"
         },
         {
           "title": "Object ID",
@@ -218,7 +222,7 @@
           "required": true,
           "editable": true,
           "type": "text",
-          "tooltip": "The ID of the object you want to retrieve from IBM X-Force Threat Intelligence Feed.",
+          "tooltip": "The ID of the object must be STIX2 identifier format. For example: indicator--785e77ae-c9e5-7035-bfab-c5a633302fd7",
           "description": "The ID of the object you want to retrieve from IBM X-Force Threat Intelligence Feed."
         }
       ],
@@ -248,7 +252,7 @@
           "required": true,
           "editable": true,
           "type": "text",
-          "tooltip": "The ID of the collection whose manifest information you want to retrieve from IBM X-Force Threat Intelligence Feed.",
+          "tooltip": "The ID of the collection must be in UUID format. For example: d4ff8286-b4ed-38f7-0520-4cbfcf8216fa",
           "description": "The ID of the collection whose manifest information you want to retrieve from IBM X-Force Threat Intelligence Feed."
         },
         {
