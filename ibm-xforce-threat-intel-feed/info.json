@@ -30,7 +30,7 @@
         "required": true,
         "editable": true,
         "visible": true,
-        "type": "password",
+        "type": "text",
         "name": "api_key"
       },
       {
@@ -142,29 +142,34 @@
           "description": "Specify the ending DateTime, which is used to filter the result set to include only the items added before the specified DateTime."
         },
         {
-          "title": "Save Response in File",
-          "name": "file_response",
+          "title": "Process Response As",
+          "name": "output_mode",
           "visible": true,
           "required": false,
           "editable": true,
-          "type": "checkbox",
-          "value": true,
+          "type": "select",
+          "options": [
+            "Save to File",
+            "Return as a JSON"
+          ],
+          "value": "Save to File",
+          "tooltip": "The Feed Data can either be returned as a JSON or written to a file on the FortiSOAR server",
+          "description": "The Feed Data can either be returned as a JSON or written to a file on the FortiSOAR server",
           "onchange": {
-            "true": [
+            "Return as a JSON": [],
+            "Save to File": [
               {
                 "title": "Filename",
                 "name": "filename",
                 "type": "text",
                 "visible": true,
                 "editable": true,
-                "required": false,
+                "required": true,
                 "placeholder": "Eg. feeds.json",
                 "tooltip": "The file will be created under /tmp"
               }
             ]
-          },
-          "tooltip": "Select this checkbox to save the response of the operation in a file. If this checkbox is cleared, the response is saved in JSON format.",
-          "description": "Select this checkbox to save the response of the operation in a file. If this checkbox is cleared, the response is saved in JSON format."
+          }
         }
       ],
       "enabled": true
