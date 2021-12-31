@@ -5,12 +5,14 @@ All rights reserved.
 FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE 
 Copyright end 
 """
-import base64
-
 import requests
 from connectors.cyops_utilities.builtins import create_file_from_string
-
 from connectors.core.connector import get_logger, ConnectorError
+try:
+    from integrations.crudhub import trigger_ingest_playbook
+except:
+    # ignore. lower FSR version
+    pass
 
 logger = get_logger('ibm-xforce-threat-intel-feed')
 
@@ -32,11 +34,10 @@ class TaxiiClient(object):
                 url = self.server_url + 'taxii2/' + endpoint
             else:
                 url = self.server_url + 'taxii2'
-            b64_credential = base64.b64encode((self.api_key + ":" + self.api_password).encode('utf-8')).decode()
-            default_header = {'Authorization': "Basic " + b64_credential, 'Content-Type': 'application/json'}
+            default_header = {'Content-Type': 'application/json'}
             headers = {**default_header, **headers} if headers is not None and headers != '' else default_header
             response = requests.request(method, url, params=params, files=files, data=data, headers=headers,
-                                        verify=self.verify_ssl)
+                                        verify=self.verify_ssl, auth=(self.api_key, self.api_password))
             if response.status_code == 200:
                 return response.json()
             else:
@@ -60,7 +61,7 @@ def get_params(params):
     return params
 
 
-def get_output_schema(config, params, *args, **kwargs):
+def get_output_schema(config, params, **kwargs):
     if params.get('file_response'):
         return ({
             "md5": "",
@@ -91,13 +92,13 @@ def get_output_schema(config, params, *args, **kwargs):
         })
 
 
-def get_api_root_information(config, params):
+def get_api_root_information(config, params, **kwargs):
     taxii = TaxiiClient(config)
     params = get_params(params)
     return taxii.make_request_taxii(params=params, headers={'Accept': 'application/vnd.oasis.taxii+json'})
 
 
-def get_collections(config, params):
+def get_collections(config, params, **kwargs):
     taxii = TaxiiClient(config)
     params = get_params(params)
     if params:
@@ -112,20 +113,34 @@ def get_collections(config, params):
         return {'collections': [response]}
 
 
-def get_objects_by_collection_id(config, params):
+def get_objects_by_collection_id(config, params, **kwargs):
     taxii = TaxiiClient(config)
     params = get_params(params)
     wanted_keys = set(['added_after', 'added_before'])
+    mode = params.get('output_mode')
     query_params = {k: params[k] for k in params.keys() & wanted_keys}
-    response = taxii.make_request_taxii(endpoint='collections/' + str(params['collectionID']) + '/objects',
-                                        params=query_params, headers={'Accept': 'application/vnd.oasis.stix+json'})
-    if params.get('file_response'):
-        return create_file_from_string(contents=response, filename=params.get('filename'))
+    try:
+        response = taxii.make_request_taxii(endpoint='collections/' + str(params['collectionID']) + '/objects',
+                                            params=query_params, headers={'Accept': 'application/vnd.oasis.stix+json'})
+        response = response.get("objects", [])
+        filtered_indicators = [indicator for indicator in response if indicator["type"] == "indicator"]
+    except Exception as e:
+        if mode == 'Create as Feed Records in FortiSOAR':
+            return 'No records ingested'
+        raise ConnectorError(str(e))
+    if mode == 'Create as Feed Records in FortiSOAR':
+        create_pb_id = params.get("create_pb_id")
+        trigger_ingest_playbook(filtered_indicators, create_pb_id, parent_env=kwargs.get('env', {}), batch_size=1000, dedup_field="pattern")
+        return 'Successfully triggered playbooks to create feed records'
+    seen = set()
+    deduped_indicators = [x for x in filtered_indicators if [x["pattern"] not in seen, seen.add(x["pattern"])][0]]
+    if mode == 'Save to File':
+        return create_file_from_string(contents=deduped_indicators, filename=params.get('filename'))
     else:
-        return response
+        return deduped_indicators
 
 
-def get_manifest_by_collection_id(config, params):
+def get_manifest_by_collection_id(config, params, **kwargs):
     taxii = TaxiiClient(config)
     params = get_params(params)
     wanted_keys = set(['added_after', 'added_before'])
@@ -134,7 +149,7 @@ def get_manifest_by_collection_id(config, params):
                                     params=query_params, headers={'Accept': 'application/vnd.oasis.taxii+json'})
 
 
-def get_objects_by_object_id(config, params):
+def get_objects_by_object_id(config, params, **kwargs):
     taxii = TaxiiClient(config)
     params = get_params(params)
     return taxii.make_request_taxii(headers={'Accept': 'application/vnd.oasis.stix+json'},
