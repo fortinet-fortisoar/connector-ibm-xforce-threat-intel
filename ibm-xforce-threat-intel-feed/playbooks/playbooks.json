@@ -6,13 +6,13 @@
       "name": "Sample - IBM X-Force Threat Intelligence Feed - 2.0.0",
       "description": "Sample playbooks for \"IBM X-Force Threat Intelligence Feed\" connector. If you are planning to use any of the sample playbooks in your environment, ensure that you clone those playbooks and move them to a different collection, since the sample playbook collection gets deleted during connector upgrade and delete.",
       "visible": true,
-      "image": "/api/3/images/c5a10f06-e992-4f29-a1a9-4202ea7026ee",
+      "image": "/api/3/images/87db8629-4188-4290-af67-d88146ca7c4d",
       "uuid": "8af111af-220b-4492-82e4-4c6cdce6f667",
-      "id": 15,
+      "id": 16,
       "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-      "createDate": 1640950119.038838,
+      "createDate": 1641280805.631969,
       "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-      "modifyDate": 1640950119.038838,
+      "modifyDate": 1641280805.631969,
       "recordTags": [],
       "deletedAt": null,
       "workflows": [
@@ -36,21 +36,6 @@
           "steps": [
             {
               "@type": "WorkflowStep",
-              "name": "Configuration",
-              "description": null,
-              "arguments": {
-                "fetchTime": "{{arrow.get((arrow.utcnow().int_timestamp  | int | abs)).format('YYYY-MM-DDTHH:mm:ss.SSS')+'Z'}}",
-                "pullTimeMacro": "IBMXForceFeedLastPullTime_{{vars['audit_info']['cyops_playbook_iri'].split('/')[-1].replace('-','_')}}"
-              },
-              "status": null,
-              "top": "160",
-              "left": "120",
-              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
-              "uuid": "5e4364ef-9d7d-4808-a478-66f5ab44b4ab",
-              "id": 268
-            },
-            {
-              "@type": "WorkflowStep",
               "name": "Start",
               "description": null,
               "arguments": {
@@ -65,7 +50,7 @@
               "left": "120",
               "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
               "uuid": "ec146c95-fca3-4c9f-872d-29607e374240",
-              "id": 273
+              "id": 293
             },
             {
               "@type": "WorkflowStep",
@@ -88,7 +73,7 @@
               "left": "120",
               "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
               "uuid": "85fe8d2b-414e-49bf-b3a8-93ad9633aed9",
-              "id": 269
+              "id": 294
             },
             {
               "@type": "WorkflowStep",
@@ -112,7 +97,7 @@
               "left": "120",
               "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
               "uuid": "97a0486c-1687-42a7-a2b4-69ba28aa7e09",
-              "id": 270
+              "id": 295
             },
             {
               "@type": "WorkflowStep",
@@ -126,7 +111,7 @@
               "left": "120",
               "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
               "uuid": "b28d1f36-735e-4dc0-9638-c0dd514d8db4",
-              "id": 272
+              "id": 296
             },
             {
               "@type": "WorkflowStep",
@@ -148,7 +133,7 @@
               "left": "120",
               "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
               "uuid": "02631bdf-5f8d-4fc4-b192-602356e202cc",
-              "id": 267
+              "id": 297
             },
             {
               "@type": "WorkflowStep",
@@ -182,7 +167,22 @@
               "left": "120",
               "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
               "uuid": "966a046a-15d7-4c23-8764-9c2af2983c70",
-              "id": 327
+              "id": 298
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Configuration",
+              "description": null,
+              "arguments": {
+                "fetchTime": "{{arrow.get((arrow.utcnow().int_timestamp  | int | abs)).format('YYYY-MM-DDTHH:mm:ss.SSS')+'Z'}}",
+                "pullTimeMacro": "IBMXForceFeedLastPullTime_{{vars['audit_info']['cyops_playbook_iri'].split('/')[-1].replace('-','_')}}"
+              },
+              "status": null,
+              "top": "160",
+              "left": "120",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "5e4364ef-9d7d-4808-a478-66f5ab44b4ab",
+              "id": 292
             }
           ],
           "routes": [
@@ -248,11 +248,11 @@
             "ingest",
             "ibm-xforce-threat-intel-feed"
           ],
-          "id": 70,
+          "id": 77,
           "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "createDate": 1640950119.04142,
-          "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "modifyDate": 1640958474.886939,
+          "createDate": 1641280805.634763,
+          "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
+          "modifyDate": 1641280805.634763,
           "owners": [],
           "isPrivate": false,
           "deletedAt": null
@@ -298,7 +298,7 @@
               "left": "180",
               "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
               "uuid": "2a10dff6-8a10-4863-a4f5-9b584d52bc27",
-              "id": 274
+              "id": 299
             },
             {
               "@type": "WorkflowStep",
@@ -324,7 +324,7 @@
               "left": "20",
               "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
               "uuid": "d6313406-67b1-42f3-a729-ca0c33769c0d",
-              "id": 275
+              "id": 300
             }
           ],
           "routes": [
@@ -344,11 +344,11 @@
             "IBM X-Force",
             "Threat Intelligence Feed"
           ],
-          "id": 71,
+          "id": 78,
           "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "createDate": 1640950119.046061,
+          "createDate": 1641280805.640154,
           "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "modifyDate": 1640950119.046061,
+          "modifyDate": 1641280805.640154,
           "owners": [],
           "isPrivate": false,
           "deletedAt": null
@@ -395,7 +395,7 @@
               "left": "20",
               "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
               "uuid": "2a05462b-2c23-4f6e-9580-c144fc3e7b17",
-              "id": 276
+              "id": 301
             },
             {
               "@type": "WorkflowStep",
@@ -418,7 +418,7 @@
               "left": "188",
               "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
               "uuid": "3609b92b-82a3-456f-b332-754a2084f439",
-              "id": 277
+              "id": 302
             }
           ],
           "routes": [
@@ -438,11 +438,11 @@
             "IBM X-Force",
             "Threat Intelligence Feed"
           ],
-          "id": 72,
+          "id": 79,
           "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "createDate": 1640950119.047148,
+          "createDate": 1641280805.641849,
           "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "modifyDate": 1640950119.047148,
+          "modifyDate": 1641280805.641849,
           "owners": [],
           "isPrivate": false,
           "deletedAt": null
@@ -462,47 +462,11 @@
             "ingestedData"
           ],
           "synchronous": false,
-          "lastModifyDate": 1640952318,
+          "lastModifyDate": 1641291779,
           "collection": "/api/3/workflow_collections/8af111af-220b-4492-82e4-4c6cdce6f667",
           "versions": [],
           "triggerStep": "/api/3/workflow_steps/bd0807dc-0381-46b6-b2d8-ca130e776522",
           "steps": [
-            {
-              "@type": "WorkflowStep",
-              "name": "Resolve Range",
-              "description": null,
-              "arguments": {
-                "tlp_resolve_range": "{{vars.tlp | resolveRange(vars.tlp_map)}}",
-                "reputation_resolve_range": "{{vars.reputation | resolveRange(vars.reputation_map)}}"
-              },
-              "status": null,
-              "top": "260",
-              "left": "420",
-              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
-              "uuid": "1feb9e5b-4c85-458c-92f1-403ef93f504e",
-              "id": 279
-            },
-            {
-              "@type": "WorkflowStep",
-              "name": "Configuration",
-              "description": null,
-              "arguments": {
-                "tlp": "Red",
-                "expiry": 70,
-                "tlp_map": "{'Red': {{'TrafficLightProtocol'| picklist('Red') }}, 'Amber': {{'TrafficLightProtocol'| picklist('Amber') }}, 'Green': {{'TrafficLightProtocol'| picklist('Green') }}, 'White': {{'TrafficLightProtocol'| picklist('White') }}}",
-                "confidence": 60,
-                "reputation": "Malicious",
-                "reputation_map": "{'Good': {{'IndicatorReputation'| picklist('Good') }}, 'Malicious': {{'IndicatorReputation'| picklist('Malicious') }}, 'Suspicious': {{'IndicatorReputation'| picklist('Suspicious') }}, 'TBD': {{'IndicatorReputation'| picklist('TBD') }}, 'No Reputation Available': {{'IndicatorReputation'| picklist('No Reputation Available') }}}",
-                "indicators_indicatorStatus_map": "{}",
-                "indicators_typeofindicator_map": "{'domain-name-value': {{'IndicatorType'| picklist('Domain') }}, 'file-name': {{'IndicatorType'| picklist('File') }}, 'file-hashes.md5': {{'IndicatorType'| picklist('FileHash-MD5') }}, 'file-hashes.sha1': {{'IndicatorType'| picklist('FileHash-SHA1') }}, 'file-hashes.sha256': {{'IndicatorType'| picklist('FileHash-SHA256') }}, 'network-traffic, ipv4-addr-value, ipv6-addr-value': {{'IndicatorType'| picklist('IP Address') }}, 'windows-registry-key-key': {{'IndicatorType'| picklist('Registry') }}, 'process-name': {{'IndicatorType'| picklist('Process') }}, 'url-value': {{'IndicatorType'| picklist('URL') }}}"
-              },
-              "status": null,
-              "top": "160",
-              "left": "240",
-              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
-              "uuid": "7702aa78-b960-4e2e-a785-cfa5f53ba971",
-              "id": 281
-            },
             {
               "@type": "WorkflowStep",
               "name": "Start",
@@ -520,7 +484,22 @@
               "left": "40",
               "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
               "uuid": "bd0807dc-0381-46b6-b2d8-ca130e776522",
-              "id": 282
+              "id": 305
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Resolve Range",
+              "description": null,
+              "arguments": {
+                "tlp_resolved": "{{ vars.tlp | resolveRange(vars.tlp_map)}}",
+                "reputation_resolved": "{{ vars.reputation | resolveRange(vars.reputation_map)"
+              },
+              "status": null,
+              "top": "260",
+              "left": "420",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "1feb9e5b-4c85-458c-92f1-403ef93f504e",
+              "id": 303
             },
             {
               "@type": "WorkflowStep",
@@ -547,21 +526,42 @@
               "left": "600",
               "stepType": "/api/3/workflow_step_types/12254cf5-5db7-4b1a-8cb1-3af081924b28",
               "uuid": "cc8946ba-60fc-4958-9199-866bb687b7e8",
-              "id": 283
+              "id": 306
             },
             {
               "@type": "WorkflowStep",
               "name": "Return Sample Data",
               "description": null,
               "arguments": {
-                "data": "[\n            {\n                \"created\": \"2021-08-19T07:09:16.546999+00:00\",\n                \"created_by_ref\": \"identity--77138c7e-d23e-4966-922c-578c5793e82c\",\n                \"id\": \"indicator--8f21728d-6206-4cb7-9248-fb05c4ecfc9a\",\n                \"indicator_types\": [\n                    \"domain-watchlist\"\n                ],\n                \"modified\": \"2021-08-19T07:09:16.546999+00:00\",\n                \"name\": \"Malicious domains\",\n                \"pattern\": \"[url:value = 'trumphujtebevrot.bit']\",\n                \"pattern_type\": \"stix\",\n                \"spec_version\": \"2.1\",\n                \"type\": \"indicator\",\n                \"valid_from\": \"2021-08-19T00:00:00\",\n                \"valid_until\": \"2021-08-24T00:00:00\"\n            },\n            {\n                \"created\": \"2021-08-19T07:09:16.546999+00:00\",\n                \"created_by_ref\": \"identity--77138c7e-d23e-4966-922c-578c5793e82c\",\n                \"id\": \"indicator--bef17ec9-ac57-482e-9b50-32023c50a728\",\n                \"indicator_types\": [\n                    \"url-watchlist\"\n                ],\n                \"modified\": \"2021-08-19T07:09:16.546999+00:00\",\n                \"name\": \"Malicious URLs\",\n                \"pattern\": \"[url:value = 'http://dood.to/d/8djq6xhrqx31']\",\n                \"pattern_type\": \"stix\",\n                \"spec_version\": \"2.1\",\n                \"type\": \"indicator\",\n                \"valid_from\": \"2021-08-19T00:00:00\",\n                \"valid_until\": \"2021-08-24T00:00:00\"\n            },\n            {\n                \"created\": \"2021-08-19T07:06:55.546999+00:00\",\n                \"id\": \"indicator--6f159a90-752e-4e6b-bebb-28e03c62c175\",\n                \"indicator_types\": [\n                    \"malicious-activity\"\n                ],\n                \"modified\": \"2021-08-19T07:06:55.546999+00:00\",\n                \"name\": \"ZeroAccess\",\n                \"pattern\": \"[network-traffic:src_port = 16464 AND network-traffic:src_ref.value = '24.45.106.57']\",\n                \"pattern_type\": \"stix\",\n                \"spec_version\": \"2.1\",\n                \"type\": \"indicator\",\n                \"valid_from\": \"2021-08-19T00:00:00\",\n                \"valid_until\": \"2021-08-24T00:00:00\"\n            }\n]"
+                "data": "[\n    {\n      \"id\": \"indicator--c51cf125-631b-4f7b-8478-c7120a01a432\",\n      \"type\": \"indicator\",\n      \"created\": \"2012-03-22T07:26:00.000Z\",\n      \"modified\": \"2021-12-27T22:02:00.000Z\",\n      \"labels\": [\n        \"malicious-activity\",\n        \"xfe-threat-score-7.1\"\n      ],\n      \"name\": \"IP Report for IP address 176.63.6.113\",\n      \"description\": \"Unauthorized access attempts originating from this IP address were detected.\",\n      \"pattern\": \"[ ipv4-addr:value = '176.63.6.113' ]\",\n      \"valid_from\": \"2021-12-27T22:02:00.000Z\"\n    },\n    {\n      \"id\": \"indicator--6d96b9ed-fff3-4192-8602-98a4ea729b0b\",\n      \"type\": \"indicator\",\n      \"created\": \"2012-03-22T07:26:00.000Z\",\n      \"modified\": \"2021-12-27T21:10:00.000Z\",\n      \"labels\": [\n        \"malicious-activity\",\n        \"xfe-threat-score-10\"\n      ],\n      \"name\": \"IP Report for IP address 77.168.147.173\",\n      \"description\": \"This IP was involved in spam sending activities.\",\n      \"pattern\": \"[ ipv4-addr:value = '77.168.147.173' ]\",\n      \"valid_from\": \"2021-12-27T21:10:00.000Z\"\n    },\n    {\n      \"id\": \"indicator--45a22043-4b10-441f-83ef-f2b35e054906\",\n      \"type\": \"indicator\",\n      \"created\": \"2012-03-14T20:59:00.000Z\",\n      \"modified\": \"2021-12-28T11:02:00.000Z\",\n      \"labels\": [\n        \"anomalous-activity\",\n        \"xfe-threat-score-5.7\"\n      ],\n      \"name\": \"IP Report for IP address 109.64.213.22\",\n      \"description\": \"Unauthorized access attempts originating from this IP address were detected.\",\n      \"pattern\": \"[ ipv4-addr:value = '109.64.213.22' ]\",\n      \"valid_from\": \"2021-12-28T11:02:00.000Z\"\n    },\n    {\n      \"id\": \"indicator--25140873-47a7-486a-882e-e347a6897112\",\n      \"type\": \"indicator\",\n      \"created\": \"2012-03-22T07:26:00.000Z\",\n      \"modified\": \"2021-12-27T07:52:00.000Z\",\n      \"labels\": [\n        \"malicious-activity\",\n        \"xfe-threat-score-10\"\n      ],\n      \"name\": \"IP Report for IP address 123.193.193.176\",\n      \"description\": \"One of the five RIRs announced a (new) location mapping of the IP.\",\n      \"pattern\": \"[ ipv4-addr:value = '123.193.193.176' ]\",\n      \"valid_from\": \"2021-12-27T07:52:00.000Z\"\n    },\n    {\n      \"id\": \"indicator--c1faa3a4-8d22-49fd-8a99-443fdc4a7dc2\",\n      \"type\": \"indicator\",\n      \"created\": \"2013-07-06T06:27:00.000Z\",\n      \"modified\": \"2021-12-27T07:52:00.000Z\",\n      \"labels\": [\n        \"malicious-activity\",\n        \"xfe-threat-score-7.1\"\n      ],\n      \"name\": \"IP Report for IP address 179.108.86.6\",\n      \"description\": \"One of the five RIRs announced a (new) location mapping of the IP.\",\n      \"pattern\": \"[ ipv4-addr:value = '179.108.86.6' ]\",\n      \"valid_from\": \"2021-12-27T07:52:00.000Z\"\n    },\n    {\n      \"id\": \"indicator--cd10b0d5-5446-47d1-8cdd-541fc37c7f6e\",\n      \"type\": \"indicator\",\n      \"created\": \"2014-11-11T14:00:00.000Z\",\n      \"modified\": \"2021-12-27T23:03:00.000Z\",\n      \"labels\": [\n        \"anomalous-activity\",\n        \"xfe-threat-score-5.7\"\n      ],\n      \"name\": \"IP Report for IP address 187.255.34.95\",\n      \"description\": \"Unauthorized access attempts originating from this IP address were detected.\",\n      \"pattern\": \"[ ipv4-addr:value = '187.255.34.95' ]\",\n      \"valid_from\": \"2021-12-27T23:03:00.000Z\"\n    }\n]"
               },
               "status": null,
               "top": "240",
               "left": "940",
               "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
               "uuid": "f6db7f8b-b22c-459c-b379-0c8e800539d2",
-              "id": 284
+              "id": 307
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Configuration",
+              "description": null,
+              "arguments": {
+                "tlp": "Amber",
+                "expiry": "90",
+                "tlp_map": "{'Red': {{'TrafficLightProtocol'| picklist('Red') }}, 'Amber': {{'TrafficLightProtocol'| picklist('Amber') }}, 'Green': {{'TrafficLightProtocol'| picklist('Green') }}, 'White': {{'TrafficLightProtocol'| picklist('White') }}}",
+                "confidence": 60,
+                "reputation": "Suspicious",
+                "reputation_map": "{'0..7': {{'IndicatorReputation'| picklist('Suspicious') }}, '7.1..10': {{'IndicatorReputation'| picklist('Malicious') }}}",
+                "indicators_indicatorStatus_map": "{}",
+                "indicators_typeofindicator_map": "{'domain-name-value': {{'IndicatorType'| picklist('Domain') }}, 'file-name': {{'IndicatorType'| picklist('File') }}, 'file-hashes.md5': {{'IndicatorType'| picklist('FileHash-MD5') }}, 'file-hashes.sha1': {{'IndicatorType'| picklist('FileHash-SHA1') }}, 'file-hashes.sha256': {{'IndicatorType'| picklist('FileHash-SHA256') }}, 'network-traffic, ipv4-addr-value, ipv6-addr-value': {{'IndicatorType'| picklist('IP Address') }}, 'windows-registry-key-key': {{'IndicatorType'| picklist('Registry') }}, 'process-name': {{'IndicatorType'| picklist('Process') }}, 'url-value': {{'IndicatorType'| picklist('URL') }}}"
+              },
+              "status": null,
+              "top": "160",
+              "left": "240",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "7702aa78-b960-4e2e-a785-cfa5f53ba971",
+              "id": 304
             },
             {
               "@type": "WorkflowStep",
@@ -577,19 +577,21 @@
                 },
                 "resource": {
                   "tLP": "{{vars.tlp_resolved}}",
-                  "value": "{%if ':value' in vars.item.pattern %}{{ vars.item.pattern.split(\\\":value = \\\")[-1].split(\\\"]\\\")[0].strip()[1:-1] }}{% elif 'network-traffic' in vars.item.pattern %}{{ vars.item.pattern.split(\\\"network-traffic:src_ref.value =\\\")[-1].split(\\\"]\\\")[0].strip()[1:-1] + \\\":\\\" + vars.item.pattern.split(\\\"network-traffic:src_port =\\\")[1].split(\\\"AND\\\")[0].strip()}}{% else %}{{vars.item.pattern}}{% endif %}",
+                  "label": "{{ vars.item.label }}",
+                  "value": "{%if ':value' in vars.item.pattern %}{{ vars.item.pattern.split(\":value = \")[-1].split(\"]\")[0].strip()[1:-1] }}{% elif 'network-traffic' in vars.item.pattern %}{{ vars.item.pattern.split(\"network-traffic:src_ref.value =\")[-1].split(\"]\")[0].strip()[1:-1] + \":\" + vars.item.pattern.split(\"network-traffic:src_port =\")[1].split(\"AND\")[0].strip()}}{% else %}{{vars.item.pattern}}{% endif %}",
                   "source": "IBM X-Force",
                   "created": "{% if vars.item.created %}{{arrow.get(vars.item.created).int_timestamp}}{% endif %}",
+                  "pattern": "{{ vars.item.pattern }}",
                   "modified": "{% if vars.item.modified %}{{arrow.get(vars.item.modified).int_timestamp}}{% endif %}",
+                  "sourceId": "{{ vars.item.id }}",
                   "__replace": "true",
-                  "expiresOn": "{% if vars.expiry %}{{ arrow.get(vars.item.valid_from).int_timestamp + (vars.expiry | int)*24*60*60 }}{% else %}{{arrow.get(vars.item.valid_until).int_timestamp}}{% endif %}",
                   "validFrom": "{% if vars.item.valid_from %}{{arrow.get(vars.item.valid_from).int_timestamp}}{% endif %}",
                   "confidence": "{% if vars.confidence %}{{ vars.confidence }}{% endif %}",
-                  "reputation": "{{vars.reputation_resolve_range}}",
+                  "reputation": "{% if vars.item.labels[1] %}{{vars.item.labels[1] | resolveRange(vars.reputation_map)}}{% else %}{{vars.reputation_resolved}}{% endif %}",
                   "sourceData": "{{ vars.item | toJSON}}",
                   "typeOfFeed": "{% if 'pattern' in vars.item %}{{ vars.item.pattern.split(\\\":\\\")[0][1:] | resolveRange(vars.threat_intelligence_typeofindicator_map)}}{% endif %}",
-                  "validUntil": "{% if vars.item.valid_until %}{{arrow.get(vars.item.valid_until).int_timestamp}}{% endif %}",
-                  "description": "<p>{{ vars.item.description }}<br>\nReputation: {{vars.item.labels}}\n</p>"
+                  "validUntil": "{% if vars.expiry %}{{ arrow.get(vars.item.valid_from).int_timestamp + (vars.expiry | int)*24*60*60 }}{% else %}{{arrow.get(vars.item.valid_until).int_timestamp}}{% endif %}",
+                  "description": "<p>{{ vars.item.description }}</p>"
                 },
                 "_showJson": false,
                 "operation": "Overwrite",
@@ -605,7 +607,7 @@
               "left": "940",
               "stepType": "/api/3/workflow_step_types/2597053c-e718-44b4-8394-4d40fe26d357",
               "uuid": "0503a027-c925-4796-bd8d-5b4ea4c9f20a",
-              "id": 278
+              "id": 308
             }
           ],
           "routes": [
@@ -663,11 +665,11 @@
             "fetch",
             "ibm-xforce-threat-intel-feed"
           ],
-          "id": 73,
+          "id": 80,
           "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "createDate": 1640950119.047927,
+          "createDate": 1641280805.643604,
           "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "modifyDate": 1640958474.947021,
+          "modifyDate": 1641291778.916944,
           "owners": [],
           "isPrivate": false,
           "deletedAt": null
@@ -717,7 +719,7 @@
               "left": "180",
               "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
               "uuid": "163fb4a4-d072-4124-8abd-3d5dbc69a916",
-              "id": 285
+              "id": 309
             },
             {
               "@type": "WorkflowStep",
@@ -743,7 +745,7 @@
               "left": "380",
               "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
               "uuid": "8d8dc31a-48bf-4a17-93ff-38c77a99706d",
-              "id": 286
+              "id": 310
             },
             {
               "@type": "WorkflowStep",
@@ -769,7 +771,7 @@
               "left": "20",
               "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
               "uuid": "e23fc754-091e-4067-ba68-aa743a8a6426",
-              "id": 287
+              "id": 311
             }
           ],
           "routes": [
@@ -798,11 +800,11 @@
             "IBM X-Force",
             "Threat Intelligence Feed"
           ],
-          "id": 74,
+          "id": 81,
           "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "createDate": 1640950119.049537,
+          "createDate": 1641280805.646262,
           "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "modifyDate": 1640950119.049537,
+          "modifyDate": 1641280805.646262,
           "owners": [],
           "isPrivate": false,
           "deletedAt": null
@@ -849,7 +851,7 @@
               "left": "20",
               "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
               "uuid": "434c0ae4-4a5d-4f06-9dee-7a391e62ff94",
-              "id": 288
+              "id": 312
             },
             {
               "@type": "WorkflowStep",
@@ -876,7 +878,7 @@
               "left": "180",
               "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
               "uuid": "60203354-ffcd-4b09-8dfc-b44a83d9caa3",
-              "id": 289
+              "id": 313
             }
           ],
           "routes": [
@@ -896,11 +898,11 @@
             "IBM X-Force",
             "Threat Intelligence Feed"
           ],
-          "id": 75,
+          "id": 82,
           "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "createDate": 1640950119.050482,
+          "createDate": 1641280805.647202,
           "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "modifyDate": 1640950119.050482,
+          "modifyDate": 1641280805.647202,
           "owners": [],
           "isPrivate": false,
           "deletedAt": null
@@ -947,7 +949,7 @@
               "left": "20",
               "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
               "uuid": "7af78a24-10a8-4cfa-a824-1460b7e38725",
-              "id": 290
+              "id": 314
             },
             {
               "@type": "WorkflowStep",
@@ -973,7 +975,7 @@
               "left": "180",
               "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
               "uuid": "a4ff6453-cc49-456e-bf30-6710958bd15a",
-              "id": 291
+              "id": 315
             }
           ],
           "routes": [
@@ -993,11 +995,11 @@
             "IBM X-Force",
             "Threat Intelligence Feed"
           ],
-          "id": 76,
+          "id": 83,
           "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "createDate": 1640950119.051239,
+          "createDate": 1641280805.647995,
           "modifyUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
-          "modifyDate": 1640950119.051239,
+          "modifyDate": 1641280805.647995,
           "owners": [],
           "isPrivate": false,
           "deletedAt": null
