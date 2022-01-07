@@ -7,9 +7,9 @@ Copyright end
 """
 
 import requests
+from connectors.cyops_utilities.builtins import create_file_from_string
 
 from connectors.core.connector import get_logger, ConnectorError
-from connectors.cyops_utilities.builtins import create_file_from_string
 
 logger = get_logger('ibm-xforce-threat-intel-feed')
 
@@ -60,7 +60,8 @@ def get_params(params):
 
 
 def get_output_schema(config, params, *args, **kwargs):
-    if params.get('file_response'):
+    mode = params.get('output_mode')
+    if mode == 'Save to File':
         return ({
             "md5": "",
             "sha1": "",
@@ -78,13 +79,20 @@ def get_output_schema(config, params, *args, **kwargs):
                     "id": "",
                     "type": "",
                     "created": "",
+                    "published": "",
                     "modified": "",
                     "labels": [
                     ],
                     "name": "",
                     "description": "",
                     "pattern": "",
-                    "valid_from": ""
+                    "valid_from": "",
+                    "object_refs": [],
+                    "x_com_ibm_short_description": "",
+                    "x_com_ibm_source_pdf": "",
+                    "x_com_ibm_source": "",
+                    "x_com_ibm_tags": [],
+                    "x_com_ibm_iris_tags": []
                 }
             ]
         })
@@ -117,7 +125,8 @@ def get_objects_by_collection_id(config, params):
     wanted_keys = set(['added_after', 'added_before'])
     query_params = {k: params[k] for k in params.keys() & wanted_keys}
     response = taxii.make_request_taxii(endpoint='collections/' + str(params['collectionID']) + '/objects',
-                                        params=query_params, headers={'Accept': 'application/vnd.oasis.stix+json'})
+                                        params=query_params,
+                                        headers={'Accept': 'application/vnd.oasis.stix+json; version=2.0'})
     response = response.get("objects", [])
     try:
         # dedup

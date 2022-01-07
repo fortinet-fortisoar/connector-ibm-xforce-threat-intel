@@ -1,7 +1,7 @@
 {
   "name": "ibm-xforce-threat-intel-feed",
   "label": "IBM X-Force Threat Intelligence Feed",
-  "description": "IBM X-Force Threat Intelligence Feed Integration",
+  "description": "IBM X-Force Threat Intelligence Feed is a preconfigured set of intelligence feeds that STAXX users can access immediately upon download, and which offers indicators and insights spanning threat categories you need to secure your business. This connector facilitates automated interactions, such as returning the list of public, private, and shared collection resources to which the user has access, returning general information for a specific object of a specific collection, etc.",
   "publisher": "Fortinet",
   "cs_approved": true,
   "cs_compatible": true,
@@ -23,7 +23,8 @@
         "visible": true,
         "type": "text",
         "name": "server_url",
-        "value": "https://api.xforce.ibmcloud.com"
+        "value": "https://api.xforce.ibmcloud.com",
+        "description": "URL of IBM X-Force Threat Intelligence Feed server to which you will connect and perform automated operations."
       },
       {
         "title": "API Key",
@@ -31,7 +32,8 @@
         "editable": true,
         "visible": true,
         "type": "text",
-        "name": "api_key"
+        "name": "api_key",
+        "description": "The API key that is configured for your account to access the IBM X-Force Threat Intelligence Feed APIs."
       },
       {
         "title": "API Password",
@@ -39,7 +41,8 @@
         "editable": true,
         "visible": true,
         "type": "password",
-        "name": "api_password"
+        "name": "api_password",
+        "description": "The API password that is configured for your account to access the IBM X-Force Threat Intelligence Feed APIs."
       },
       {
         "title": "Verify SSL",
@@ -48,7 +51,8 @@
         "visible": true,
         "type": "checkbox",
         "name": "verify_ssl",
-        "value": true
+        "value": true,
+        "description": "Specifies whether the SSL certificate for the server is to be verified or not. By default, this option is set as True."
       }
     ]
   },
@@ -96,8 +100,8 @@
           "required": false,
           "editable": true,
           "type": "text",
-          "tooltip": "Retrive all avaiable objects in a Collection. {collectionID} must be in UUID format. For example: d4ff8286-b4ed-38f7-0520-4cbfcf8216fa.",
-          "description": "Retrive all avaiable objects in a Collection. {collectionID} must be in UUID format. For example: d4ff8286-b4ed-38f7-0520-4cbfcf8216fa."
+          "tooltip": "The ID of the collection whose general information you want to retrieve from IBM X-Force Threat Intelligence Feed",
+          "description": "The ID of the collection whose general information, such as ID, Title, Description, Can Read, Can Write, Media Types, etc. you want to retrieve from IBM X-Force Threat Intelligence Feed. "
         }
       ],
       "enabled": true
@@ -118,8 +122,8 @@
           "required": true,
           "editable": true,
           "type": "text",
-          "tooltip": "The ID of the collection whose general information, such as ID, Title, Description, Can Read, Can Write and Media Types, etc. you want to retrieve from IBM X-Force Threat Intelligence Feed.",
-          "description": "The ID of the collection whose general information, such as ID, Title, Description, Can Read, Can Write and Media Types, etc. you want to retrieve from IBM X-Force Threat Intelligence Feed."
+          "tooltip": "The ID of the collection whose general information you want to retrieve from IBM X-Force Threat Intelligence Feed",
+          "description": "The ID of the collection whose information such as ID, Title, Description, Can Read, Can Write, Media Types, etc. you want to retrieve from IBM X-Force Threat Intelligence Feed."
         },
         {
           "title": "Created After",
@@ -128,7 +132,7 @@
           "required": false,
           "editable": true,
           "type": "datetime",
-          "tooltip": "FSpecify the starting DateTime, which is used to filter the result set to include only the items added after the specified DateTime.",
+          "tooltip": "Specify the starting DateTime, which is used to filter the result set to include only the items added after the specified DateTime.",
           "description": "Specify the starting DateTime, which is used to filter the result set to include only the items added after the specified DateTime."
         },
         {
@@ -154,7 +158,7 @@
           ],
           "value": "Save to File",
           "tooltip": "The Feed Data can either be returned as a JSON or written to a file on the FortiSOAR server",
-          "description": "The Feed Data can either be returned as a JSON or written to a file on the FortiSOAR server",
+          "description": "Select this checkbox to save the response of the operation in a file. If this checkbox is cleared, the response is saved in JSON format. If you select this checkbox, then in the Filename field add the name of the file in which you want to save the response. The file will be created in /tmp.",
           "onchange": {
             "Return as a JSON": [],
             "Save to File": [
@@ -217,8 +221,8 @@
           "required": true,
           "editable": true,
           "type": "text",
-          "tooltip": "The ID of the collection must be in UUID format. For example: d4ff8286-b4ed-38f7-0520-4cbfcf8216fa",
-          "description": "The ID of the collection that contains the object you want to retrieve from IBM X-Force Threat Intelligence Feed. ID must be in UUID format. For example: d4ff8286-b4ed-38f7-0520-4cbfcf8216fa"
+          "tooltip": "The ID of the collection that contains the object you want to retrieve from IBM X-Force Threat Intelligence Feed.",
+          "description": "The ID of the collection that contains the object you want to retrieve from IBM X-Force Threat Intelligence Feed."
         },
         {
           "title": "Object ID",
@@ -227,7 +231,7 @@
           "required": true,
           "editable": true,
           "type": "text",
-          "tooltip": "The ID of the object must be STIX2 identifier format. For example: indicator--785e77ae-c9e5-7035-bfab-c5a633302fd7",
+          "tooltip": "The ID of the object you want to retrieve from IBM X-Force Threat Intelligence Feed.",
           "description": "The ID of the object you want to retrieve from IBM X-Force Threat Intelligence Feed."
         }
       ],
@@ -257,7 +261,7 @@
           "required": true,
           "editable": true,
           "type": "text",
-          "tooltip": "The ID of the collection must be in UUID format. For example: d4ff8286-b4ed-38f7-0520-4cbfcf8216fa",
+          "tooltip": "The ID of the collection whose manifest information you want to retrieve from IBM X-Force Threat Intelligence Feed.",
           "description": "The ID of the collection whose manifest information you want to retrieve from IBM X-Force Threat Intelligence Feed."
         },
         {
