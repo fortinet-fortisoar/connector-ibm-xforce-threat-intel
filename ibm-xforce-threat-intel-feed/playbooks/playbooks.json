@@ -449,7 +449,7 @@
             "lastPullTime"
           ],
           "synchronous": false,
-          "lastModifyDate": 1642059856,
+          "lastModifyDate": 1642496025,
           "collection": "/api/3/workflow_collections/8af111af-220b-4492-82e4-4c6cdce6f667",
           "versions": [],
           "triggerStep": "/api/3/workflow_steps/bd0807dc-0381-46b6-b2d8-ca130e776522",
@@ -470,8 +470,10 @@
                 "resource": {
                   "tlp": "{{vars.tlp_resolve_range}}",
                   "value": "{{vars.item.pattern.split('= ')[-1].strip().replace(\" \",\"\")[1:-2]}}",
+                  "sourceID": "{{vars.item.id}}",
                   "__replace": "true",
                   "firstSeen": "{{(arrow.get(vars.item['created']).int_timestamp)}}",
+                  "confidence": "{{vars.confidence}}",
                   "reputation": "{{vars.reputation_resolve_range}}",
                   "description": "<p>{{ vars.item.description }}<br>\nReputation: {{vars.item.labels}}\n</p>",
                   "indicatorStatus": {
@@ -701,7 +703,7 @@
           "createUser": "/api/3/appliances/57545210-2adc-472b-a24f-2df6ee8dfe63",
           "createDate": 1641988912,
           "modifyUser": "/api/3/people/3451141c-bac6-467c-8d72-85e0fab569ce",
-          "modifyDate": 1642059856,
+          "modifyDate": 1642496025,
           "owners": [],
           "isPrivate": false
         },
