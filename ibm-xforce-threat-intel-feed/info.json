@@ -5,15 +5,18 @@
   "publisher": "Fortinet",
   "cs_approved": true,
   "cs_compatible": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "category": "Threat Intelligence",
   "icon_small_name": "small.png",
   "icon_large_name": "large.png",
+  "tags": [
+    "threatintel-inbound"
+  ],
   "ingestion_supported": true,
   "ingestion_modes": [
     "scheduled"
   ],
-  "help_online": "https://docs.fortinet.com/document/fortisoar/1.0.0/ibm-x-force-threat-intelligence-feed/204/ibm-x-force-threat-intelligence-feed-v1-0-0",
+  "help_online": "",
   "configuration": {
     "fields": [
       {
@@ -153,13 +156,25 @@
           "editable": true,
           "type": "select",
           "options": [
+            "Create as Feed Records in FortiSOAR",
             "Save to File",
             "Return as a JSON"
           ],
-          "value": "Save to File",
-          "tooltip": "The Feed Data can either be returned as a JSON or written to a file on the FortiSOAR server",
-          "description": "Select this checkbox to save the response of the operation in a file. If this checkbox is cleared, the response is saved in JSON format. If you select this checkbox, then in the Filename field add the name of the file in which you want to save the response. The file will be created in /tmp.",
+          "value": "Create as Feed Records in FortiSOAR",
+          "tooltip": "The Feed Data can either be returned as a JSON; written to a file on the FortiSOAR server; or Created as Feed Records in FortiSOAR",
+          "description": "Select the method of returning the Feed Data information. You can choose between the data being create as Feed records in FortiSOAR or returned in the JSON format (Return as a JSON) or being written to a file on the FortiSOAR server (Save to File). If you choose the 'Create as Feed Records in FortiSOAR' option, then in Record Creation Playbook IRI field, specify the IRI of the Create Record playbooks IRI, else if if you choose 'Save to File' option, then in the Filename field, specify the name of the file in which you want to save the feed information retrieved from IBM X-Force.",
           "onchange": {
+            "Create as Feed Records in FortiSOAR": [
+              {
+                "title": "Record Creation Playbook IRI",
+                "description": "",
+                "type": "text",
+                "name": "create_pb_id",
+                "required": false,
+                "editable": true,
+                "visible": true
+              }
+            ],
             "Return as a JSON": [],
             "Save to File": [
               {
